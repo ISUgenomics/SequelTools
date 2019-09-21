@@ -752,7 +752,14 @@ if [ "$TOOL" == "Q" ]; then
 
 #Subsetting longest subreads tool
 elif [ $TOOL == "S" ]; then
-    echo -e "\nBeginning read subsampling function"
+    echo -e "\nBeginning read subsampling function by chosen criteria:"
+    if [ $SUBSAMP_LONGSUB == true ] && [ $SUBSAMP_RAND == true ]; then
+        echo "  longest subreads and random subsampling"
+    elif [ $SUBSAMP_LONGSUB == true ] && [ $SUBSAMP_RAND == false ]; then
+        echo "  longest subreads"
+    else  #If both are false an error should have already occured
+        echo "  random subsampling"
+    fi
 
     #Declare whether running with or without scraps
     if [ $NOSCRAPS == true ]; then
@@ -955,7 +962,26 @@ elif [ $TOOL == "S" ]; then
 
 
 elif [ "$TOOL" == "F" ]; then
-    echo -e "\nBeginning to filter reads by chosen criteria"
+    echo -e "\nBeginning to filter reads by chosen criteria:"
+    if [ $CLR_FILT == true ] && [ $NUMPASS_FILT == true ] && [ $NORMSCRAP_FILT == true ]; then
+        echo "  CLR length, number of full passes, and normal scraps"
+    elif [ $CLR_FILT == true ] && [ $NUMPASS_FILT == true ] && [ $NORMSCRAP_FILT == false ]; then
+        echo "  CLR length and number of full passes"
+    elif [ $CLR_FILT == true ] && [ $NUMPASS_FILT == false ] && [ $NORMSCRAP_FILT == true ]; then
+        echo "  CLR length and normal scraps"
+    elif [ $CLR_FILT == false ] && [ $NUMPASS_FILT == true ] && [ $NORMSCRAP_FILT == true ]; then
+        echo "  number of full passes and normal scraps"
+    elif [ $CLR_FILT == true ] && [ $NUMPASS_FILT == false ] && [ $NORMSCRAP_FILT == false ]; then
+        echo "  CLR length"
+    elif [ $CLR_FILT == false ] && [ $NUMPASS_FILT == true ] && [ $NORMSCRAP_FILT == false ]; then
+        echo "  number of full passes"
+    elif [ $CLR_FILT == false ] && [ $NUMPASS_FILT == false ] && [ $NORMSCRAP_FILT == true ]; then
+        echo "  normal scraps"
+    else  #If both are false an error should have already occured
+        echo "  ERROR: chosen read filtering criteria problem"
+	exit 1
+    fi
+    
 
     #Go through scraps and subreads filename files and capture .bam filenames
     SUBREADS_FILES_ARRAY_BAM=()
