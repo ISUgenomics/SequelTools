@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 #This script is designed to make all plots for SequelQC
 #Created by David E. Hufnagel on Aug 1, 2018
 

@@ -24,7 +24,7 @@ function print_help_menu() {
     -t : Declares which of SequelTools' tools will be used.  Options: 
          'Q' for quality control, 
 	 'S' for subsampling by longest subreads (per CLR) and/or by random 
-	     CLR selection, and 
+	     CLR selection.
 	 'F' for filtering reads by CLR minimum length and/or having at least 
 	     one complete pass of the DNA molecule past the polymerase and/or 
 	     normal adapters for scraps. Scraps files are required for this
@@ -665,18 +665,18 @@ if [ "$TOOL" == "Q" ]; then
  
         if [ $TOSKIP == false ]; then
             if [ $NOSCRAPS == true ]; then
-                python generateReadLenStats_noScraps.py "$SUBREADS_NOBAM.seqNames" "$BASE.SMRTcellStats_noScraps.txt" "$BASE.readLens.sub.txt" "$BASE.readLens.longSub.txt" || {
+                generateReadLenStats_noScraps.py "$SUBREADS_NOBAM.seqNames" "$BASE.SMRTcellStats_noScraps.txt" "$BASE.readLens.sub.txt" "$BASE.readLens.longSub.txt" || {
                 echo >&2 "$FAILED_RLSTATS"
                 exit 1
                 }
             else
                 if [ "$GROUPS_DESIRED" == "a" ]; then
-                    python generateReadLenStats_wScraps.py "$SCRAPS_NOBAM.seqNamesPlus" "$SUBREADS_NOBAM.seqNames" "$BASE.SMRTcellStats_wScrapsA.txt" "$BASE.readLens.sub.txt" "$BASE.readLens.clr.txt" "$BASE.readLens.subedClr.txt" "$BASE.readLens.longSub.txt" "$BASE.clrStats.txt" "$GROUPS_DESIRED" || {
+                    generateReadLenStats_wScraps.py "$SCRAPS_NOBAM.seqNamesPlus" "$SUBREADS_NOBAM.seqNames" "$BASE.SMRTcellStats_wScrapsA.txt" "$BASE.readLens.sub.txt" "$BASE.readLens.clr.txt" "$BASE.readLens.subedClr.txt" "$BASE.readLens.longSub.txt" "$BASE.clrStats.txt" "$GROUPS_DESIRED" || {
                     echo >&2 "$FAILED_RLSTATS"
                     exit 1
                     }
                 elif [ "$GROUPS_DESIRED" == "b" ]; then
-                    python generateReadLenStats_wScraps.py "$SCRAPS_NOBAM.seqNamesPlus" "$SUBREADS_NOBAM.seqNames" "$BASE.SMRTcellStats_wScrapsB.txt" "$BASE.readLens.sub.txt" "$BASE.readLens.clr.txt" "$BASE.readLens.subedClr.txt" "$BASE.readLens.longSub.txt" "$BASE.clrStats.txt" "$GROUPS_DESIRED" || {
+                    generateReadLenStats_wScraps.py "$SCRAPS_NOBAM.seqNamesPlus" "$SUBREADS_NOBAM.seqNames" "$BASE.SMRTcellStats_wScrapsB.txt" "$BASE.readLens.sub.txt" "$BASE.readLens.clr.txt" "$BASE.readLens.subedClr.txt" "$BASE.readLens.longSub.txt" "$BASE.clrStats.txt" "$GROUPS_DESIRED" || {
                     echo >&2 "$FAILED_RLSTATS"
                     exit 1
                     }
@@ -698,15 +698,15 @@ if [ "$TOOL" == "Q" ]; then
 
     if [ "$ALTRSCRIPT" == "" ]; then
         if [ $NOSCRAPS == false ]; then
-            Rscript plotForSequelQC_wScraps.R ${FILES_FOR_R::$((${#FILES_FOR_R} - 1))} ${LENGTHS_FOR_R::$((${#LENGTHS_FOR_R} - 1))} "$GROUPS_DESIRED" "$PLOTS_DESIRED" "$VERBOSE" "$OUT_FOLD" #the '::-1' is to remove the comma at the end
+            plotForSequelQC_wScraps.R ${FILES_FOR_R::$((${#FILES_FOR_R} - 1))} ${LENGTHS_FOR_R::$((${#LENGTHS_FOR_R} - 1))} "$GROUPS_DESIRED" "$PLOTS_DESIRED" "$VERBOSE" "$OUT_FOLD" #the '::-1' is to remove the comma at the end
         else
-            Rscript plotForSequelQC_noScraps.R ${FILES_FOR_R::$((${#FILES_FOR_R} - 1))} ${LENGTHS_FOR_R::$((${#LENGTHS_FOR_R} - 1))} "$PLOTS_DESIRED" "$VERBOSE" "$OUT_FOLD" #the '$((${#LENGTHS_FOR_R} - 1))' is to remove the comma at the end
+            plotForSequelQC_noScraps.R ${FILES_FOR_R::$((${#FILES_FOR_R} - 1))} ${LENGTHS_FOR_R::$((${#LENGTHS_FOR_R} - 1))} "$PLOTS_DESIRED" "$VERBOSE" "$OUT_FOLD" #the '$((${#LENGTHS_FOR_R} - 1))' is to remove the comma at the end
         fi
     else
         if [ $NOSCRAPS == false ]; then
-            Rscript "$ALTRSCRIPT" ${FILES_FOR_R::$((${#FILES_FOR_R} - 1))} ${LENGTHS_FOR_R::$((${#LENGTHS_FOR_R} - 1))} "$GROUPS_DESIRED" "$PLOTS_DESIRED" "$VERBOSE" "$OUT_FOLD" #the '::-1' is to remove the comma at the end
+            "$ALTRSCRIPT" ${FILES_FOR_R::$((${#FILES_FOR_R} - 1))} ${LENGTHS_FOR_R::$((${#LENGTHS_FOR_R} - 1))} "$GROUPS_DESIRED" "$PLOTS_DESIRED" "$VERBOSE" "$OUT_FOLD" #the '::-1' is to remove the comma at the end
         else
-            Rscript "$ALTRSCRIPT" ${FILES_FOR_R::$((${#FILES_FOR_R} - 1))} ${LENGTHS_FOR_R::$((${#LENGTHS_FOR_R} - 1))} "$PLOTS_DESIRED" "$VERBOSE" "$OUT_FOLD" #the '::-1' is to remove the comma at the end
+            "$ALTRSCRIPT" ${FILES_FOR_R::$((${#FILES_FOR_R} - 1))} ${LENGTHS_FOR_R::$((${#LENGTHS_FOR_R} - 1))} "$PLOTS_DESIRED" "$VERBOSE" "$OUT_FOLD" #the '::-1' is to remove the comma at the end
         fi
     fi
 
