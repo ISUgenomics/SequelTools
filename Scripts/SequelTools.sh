@@ -618,7 +618,7 @@ if [ "$TOOL" == "Q" ]; then
             fi
 
             NOBAM=${SUBREADS_FILES_ARRAY_NOBAM[I]}
-            samtools view --threads "$NTHREADS" -O SAM "$BAM" | awk '{print $1}' > "$NOBAM.seqNames" || {
+            samtools view --threads "$NTHREADS" -O SAM "$BAM" | awk '{print $1}' > "$OUT_FOLD/$NOBAM.seqNames" || {
             echo >&2 "$FAILED_EXTRACTION"
             exit 1
             }
@@ -635,7 +635,7 @@ if [ "$TOOL" == "Q" ]; then
                 fi
 
                 NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
-                samtools view --threads "$NTHREADS" -O SAM "$BAM" | awk '{print $1,"\t",$21,"\t",$22}' > "$NOBAM.seqNamesPlus" || {
+                samtools view --threads "$NTHREADS" -O SAM "$BAM" | awk '{print $1,"\t",$21,"\t",$22}' > "$OUT_FOLD/$NOBAM.seqNamesPlus" || {
                 echo >&2 "$FAILED_EXTRACTION"
                 exit 1
                 }
@@ -672,18 +672,18 @@ if [ "$TOOL" == "Q" ]; then
  
         if [ $TOSKIP == false ]; then
             if [ $NOSCRAPS == true ]; then
-                generateReadLenStats_noScraps.py "$SUBREADS_NOBAM.seqNames" "$BASE.SMRTcellStats_noScraps.txt" "$BASE.readLens.sub.txt" "$BASE.readLens.longSub.txt" || {
+                generateReadLenStats_noScraps.py "$OUT_FOLD/$SUBREADS_NOBAM.seqNames" "$OUT_FOLD/$BASE.SMRTcellStats_noScraps.txt" "$OUT_FOLD/$BASE.readLens.sub.txt" "$OUT_FOLD/$BASE.readLens.longSub.txt" || {
                 echo >&2 "$FAILED_RLSTATS"
                 exit 1
                 }
             else
                 if [ "$GROUPS_DESIRED" == "a" ]; then
-                    generateReadLenStats_wScraps.py "$SCRAPS_NOBAM.seqNamesPlus" "$SUBREADS_NOBAM.seqNames" "$BASE.SMRTcellStats_wScrapsA.txt" "$BASE.readLens.sub.txt" "$BASE.readLens.clr.txt" "$BASE.readLens.subedClr.txt" "$BASE.readLens.longSub.txt" "$BASE.clrStats.txt" "$GROUPS_DESIRED" || {
+                    generateReadLenStats_wScraps.py "$OUT_FOLD/$SCRAPS_NOBAM.seqNamesPlus" "$OUT_FOLD/$SUBREADS_NOBAM.seqNames" "$OUT_FOLD/$BASE.SMRTcellStats_wScrapsA.txt" "$OUT_FOLD/$BASE.readLens.sub.txt" "$OUT_FOLD/$BASE.readLens.clr.txt" "$OUT_FOLD/$BASE.readLens.subedClr.txt" "$OUT_FOLD/$BASE.readLens.longSub.txt" "$OUT_FOLD/$BASE.clrStats.txt" "$GROUPS_DESIRED" || {
                     echo >&2 "$FAILED_RLSTATS"
                     exit 1
                     }
                 elif [ "$GROUPS_DESIRED" == "b" ]; then
-                    generateReadLenStats_wScraps.py "$SCRAPS_NOBAM.seqNamesPlus" "$SUBREADS_NOBAM.seqNames" "$BASE.SMRTcellStats_wScrapsB.txt" "$BASE.readLens.sub.txt" "$BASE.readLens.clr.txt" "$BASE.readLens.subedClr.txt" "$BASE.readLens.longSub.txt" "$BASE.clrStats.txt" "$GROUPS_DESIRED" || {
+                    generateReadLenStats_wScraps.py "$OUT_FOLD/$SCRAPS_NOBAM.seqNamesPlus" "$OUT_FOLD/$SUBREADS_NOBAM.seqNames" "$OUT_FOLD/$BASE.SMRTcellStats_wScrapsB.txt" "$OUT_FOLD/$BASE.readLens.sub.txt" "$OUT_FOLD/$BASE.readLens.clr.txt" "$OUT_FOLD/$BASE.readLens.subedClr.txt" "$OUT_FOLD/$BASE.readLens.longSub.txt" "$OUT_FOLD/$BASE.clrStats.txt" "$GROUPS_DESIRED" || {
                     echo >&2 "$FAILED_RLSTATS"
                     exit 1
                     }
@@ -735,20 +735,20 @@ if [ "$TOOL" == "Q" ]; then
             fi
             BASE=${FILES_BASE_ARRAY[I]} 
 
-            rm "$SUBREADS_NOBAM.seqNames"
-            rm "$BASE.readLens.sub.txt"
-            rm "$BASE.readLens.longSub.txt"
-            rm "$BASE.SMRTcellStats_noScraps.txt"
+            rm "$OUT_FOLD/$SUBREADS_NOBAM.seqNames"
+            rm "$OUT_FOLD/$BASE.readLens.sub.txt"
+            rm "$OUT_FOLD/$BASE.readLens.longSub.txt"
+            rm "$OUT_FOLD/$BASE.SMRTcellStats_noScraps.txt"
 
             if [ $NOSCRAPS == false ]; then
-                rm "$SCRAPS_NOBAM.seqNamesPlus"
-                rm "$BASE.readLens.clr.txt"
-                rm "$BASE.readLens.subedClr.txt"
-                rm "$BASE.clrStats.txt"
+                rm "$OUT_FOLD/$SCRAPS_NOBAM.seqNamesPlus"
+                rm "$OUT_FOLD/$BASE.readLens.clr.txt"
+                rm "$OUT_FOLD/$BASE.readLens.subedClr.txt"
+                rm "$OUT_FOLD/$BASE.clrStats.txt"
                 if [ "$GROUPS_DESIRED" == "a" ]; then
-                    rm "$BASE.SMRTcellStats_wScrapsA.txt"
+                    rm "$OUT_FOLD/$BASE.SMRTcellStats_wScrapsA.txt"
                 elif [ "$GROUPS_DESIRED" == "b" ]; then
-                    rm "$BASE.SMRTcellStats_wScrapsB.txt"
+                    rm "$OUT_FOLD/$BASE.SMRTcellStats_wScrapsB.txt"
                 fi
             fi
 
@@ -867,14 +867,14 @@ elif [ $TOOL == "S" ]; then
 
         #Convert BAM files to SAM format
         NOBAM=${SUBREADS_FILES_ARRAY_NOBAM[I]}
-        samtools view --threads "$NTHREADS" -O SAM -h "$BAM" > "$NOBAM.sam" || {
+        samtools view --threads "$NTHREADS" -O SAM -h "$BAM" > "$OUT_FOLD/$NOBAM.sam" || {
         echo >&2 "$FAILED_EXTRACTION"
         exit 1
         }
 
 	if [ $NOSCRAPS == false ]; then
 	    NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
-            samtools view --threads "$NTHREADS" -O SAM -h "$NOBAM.bam" > "$NOBAM.sam" || {
+            samtools view --threads "$NTHREADS" -O SAM -h "$NOBAM.bam" > "$OUT_FOLD/$NOBAM.sam" || {
             echo >&2 "$FAILED_EXTRACTION"
             exit 1
             }
@@ -893,13 +893,13 @@ elif [ $TOOL == "S" ]; then
     for SUBREADS_NOBAM in "${SUBREADS_FILES_ARRAY_NOBAM[@]}"; do
 	SCRAPS_NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
         if [ $NOSCRAPS == true  ]; then
-            python subsampleReads_noScraps.py "$SUBREADS_NOBAM.sam" "$OUT_FOLD" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
+            subsampleReads_noScraps.py "$OUT_FOLD/$SUBREADS_NOBAM.sam" "$OUT_FOLD" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
             echo >&2 "ERROR: Read subsampling failed!"
             exit 1
             }
 
 	else
-            python subsampleReads_wScraps.py "$SUBREADS_NOBAM.sam" "$SCRAPS_NOBAM.sam" "$OUT_FOLD" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
+            subsampleReads_wScraps.py "$OUT_FOLD/$SUBREADS_NOBAM.sam" "$OUT_FOLD/$SCRAPS_NOBAM.sam" "$OUT_FOLD" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
             echo >&2 "ERROR: Read subsampling failed!"
             exit 1
             }
@@ -1073,13 +1073,13 @@ elif [ "$TOOL" == "F" ]; then
 
         #Convert BAM files to SAM format
         SUBREADS_NOBAM=${SUBREADS_FILES_ARRAY_NOBAM[I]}
-        samtools view --threads "$NTHREADS" -O SAM -h "$BAM" > "$SUBREADS_NOBAM.sam" || {
+        samtools view --threads "$NTHREADS" -O SAM -h "$BAM" > "$OUT_FOLD/$SUBREADS_NOBAM.sam" || {
         echo >&2 "$FAILED_EXTRACTION"
         exit 1
         }
 
         SCRAPS_NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
-        samtools view --threads "$NTHREADS" -O SAM -h "$SCRAPS_NOBAM.bam" > "$SCRAPS_NOBAM.sam" || {
+        samtools view --threads "$NTHREADS" -O SAM -h "$SCRAPS_NOBAM.bam" > "$OUT_FOLD/$SCRAPS_NOBAM.sam" || {
         echo >&2 "$FAILED_EXTRACTION"
         exit 1
         }
@@ -1097,7 +1097,7 @@ elif [ "$TOOL" == "F" ]; then
     I=1
     for SUBREADS_NOBAM in "${SUBREADS_FILES_ARRAY_NOBAM[@]}"; do
         SCRAPS_NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
-        python filterReads.py "$SUBREADS_NOBAM.sam" "$SCRAPS_NOBAM.sam" "$OUT_FOLD" "$CLR_FILT" "$NUMPASS_FILT" "$NORMSCRAP_FILT" "$CLR_FILT_THRESH" || {
+        filterReads.py "$OUT_FOLD/$SUBREADS_NOBAM.sam" "$OUT_FOLD/$SCRAPS_NOBAM.sam" "$OUT_FOLD" "$CLR_FILT" "$NUMPASS_FILT" "$NORMSCRAP_FILT" "$CLR_FILT_THRESH" || {
         echo >&2 "ERROR: Read filtering failed!"
         exit 1
         }
