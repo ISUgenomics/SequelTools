@@ -21,12 +21,12 @@ https://cran.r-project.org/bin/macosx/
 Once installed, clone the github repository, make the script executables, and add it to your path like so:
 
 ```
-git clone https://github.com/ISUgenomics/SequelQC.git
+git clone https://github.com/ISUgenomics/SequelTools.git
 cd SequelQC
 chmod +x *.sh *.py
 export PATH=$PATH:"$(pwd)"
 ```
-For a more permanent solution, you can add the export path line to your `.bashrc` file
+For a more permanent solution, you can add the export path line to the `.bashrc` file in your home directory for Linux.  For Mac users use `.bash_profile` instead of `.bashrc`.
 
 ```
 PATH=$PATH:/path/to/SequelQC
@@ -34,23 +34,37 @@ PATH=$PATH:/path/to/SequelQC
 
 No compilation is required so you are now done with installation! 
 
-## Running SequelQC
+## Running SequelTools
 
-For a test data set we recommend using NCBI BioProject PRJNA483067, which can be found at https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=483067
+For a test data set we recommend using the same data set used in the paper, XXXXXXXXXXXXX
 
-The `SequelQC.sh` is the main script to execute. This script will call all other necessary scripts. You can test whether the main script was properly installed by calling the script alone:
+The `SequelTools.sh` is the main script to execute. This script will call all other necessary scripts. You can test whether the main script was properly installed by calling the script alone:
 
 ```
-./SequelQC.sh
+./SequelTools.sh
 ```
 
 or 
 
 ```
-bash SequelQC.sh
+bash SequelTools.sh
 ```
 
 This should bring up the help menu.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 _SequelQC_ has only one required argument, `-u`. The argument `-u` requires a file listing all the locations of the s`u`bread BAM files.  With this argument alone _SequelQC_ will run without scraps files.  _SequelQC_ may also be run with scraps files by including the `-c` parameter which requires a file listing the location of all s`c`raps BAM files.  In each case the format is simply one filename per line.  With scraps files _SequelQC_ takes longer to run, but also creates more plots and provides more information within the same plots regarding continuous long reads (CLRs).
 
