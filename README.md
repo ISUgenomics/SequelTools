@@ -63,13 +63,7 @@ find $(pwd) -name "*subreads.bam"  > subreads.txt
 find $(pwd) -name "*scraps.bam"  > scraps.txt
 ```
 
-
-
-
-
-
-
-Once done, to run _SequelQC_ using all default arguments execute `SequelQC.sh` as follows:
+Once these files are created, to run _SequelTools_' QC tool using all default arguments execute `SequelTools.sh` as follows:
 
 ```
 ./SequelQC.sh -u subreads.txt
@@ -92,6 +86,16 @@ or
 
 ```
 bash SequelQC.sh -u subreads.txt -c scraps.txt
+
+
+To run _SequelTools_' Read Subsampling tool in its simplest construction, subsampling using both criteria execute `SequelTools.sh` as follows:
+
+
+To run _SequelTools_' Read Filtering tool in its simplest construction using  all three  possible  filtering  criteria  and  using  1000  base  pairs  as  the  minimum  CLR length execute `SequelTools.sh` as follows:
+
+
+
+
 ```
 
 ## Other Arguments
