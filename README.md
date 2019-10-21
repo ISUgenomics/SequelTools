@@ -66,37 +66,72 @@ find $(pwd) -name "*scraps.bam"  > scraps.txt
 Once these files are created, to run _SequelTools_' QC tool using all default arguments execute `SequelTools.sh` as follows:
 
 ```
-./SequelQC.sh -u subreads.txt
+./SequelTools.sh -t Q -u subFiles.txt
 ```
 
 or 
 
 ```
-bash SequelQC.sh -u subreads.txt
+bash SequelTools.sh -t Q -u subFiles.txt
 ```
 
 or
 
 
 ```
-./SequelQC.sh -u subreads.txt -c scraps.txt
+./SequelTools.sh -t Q -u subFiles.txt -c scrFiles.txt
 ```
 
 or 
 
 ```
-bash SequelQC.sh -u subreads.txt -c scraps.txt
-
+bash SequelTools.sh -t Q -u subFiles.txt -c scrFiles.txt
+```
 
 To run _SequelTools_' Read Subsampling tool in its simplest construction, subsampling using both criteria execute `SequelTools.sh` as follows:
+
+```
+./SequelTools.sh -t S -u subFiles.txt -T lr
+```
+
+or
+
+```
+bash SequelTools.sh -t S -u subFiles.txt -T lr
+```
+
+or
+
+```
+./SequelTools.sh -t S -u subFiles.txt -c scrapsFiles.txt -T lr
+```
+
+or
+
+```
+bash SequelTools.sh -t S -u subFiles.txt -c scrapsFiles.txt -T lr
+```
 
 
 To run _SequelTools_' Read Filtering tool in its simplest construction using  all three  possible  filtering  criteria  and  using  1000  base  pairs  as  the  minimum  CLR length execute `SequelTools.sh` as follows:
 
+```
+./SequelTools.sh -t F -u smallSubs.txt -c smallScraps.txt -C -P -N -Z 1000
+```
 
-
+or
 
 ```
+bash SequelTools.sh -t F -u smallSubs.txt -c smallScraps.txt -C -P -N -Z 1000
+```
+
+
+
+
+
+
+
+
 
 ## Other Arguments
 
