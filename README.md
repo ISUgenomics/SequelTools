@@ -1,11 +1,11 @@
 # SequelTools
 
-_SequelTools_ is a fast and easy to install command-line program that provides a collection of tools for working with multiple SMRTcells of PacBio Sequel raw sequece data containing three tools: the Quality Control (QC) tool, the Read Subsampling tool, and the Read Filtering tool.  The QC tool produces multiple statistics and publication quality plots describing the quality of the data including N50, read length and count statistics, PSR, and ZOR.  The Read Subsampling tool allows the user to subsample their BAM format sequence files by one or more potential criteria: longest subreads per CLR, or random CLR selection. This tool provides the user a filtering functionality and requires both scraps files and subreads files to function. Filtering can be done using one or more of the following criteria: 1) minimum CLR length, 2) having at least one complete pass of the DNA molecule past the polymerase, or 3) Normal adapters for scrap
+_SequelTools_ is a fast and easy to install command-line program that provides a collection of tools for working with multiple SMRTcells of PacBio Sequel raw sequece data containing three tools: the Quality Control (QC) tool, the Read Subsampling tool, and the Read Filtering tool.  The QC tool produces multiple statistics and publication quality plots describing the quality of the data including N50, read length and count statistics, PSR, and ZOR.  The Read Subsampling tool allows the user to subsample their BAM format sequence files by one or more potential criteria: longest subreads per continuous long read (CLR), or random CLR selection. This tool provides the user a filtering functionality and requires both scraps files and subreads files to function. Filtering can be done using one or more of the following criteria: 1) minimum CLR length, 2) having at least one complete pass of the DNA molecule past the polymerase, or 3) Normal adapters for scrap
 
 ## Installation
 
 ### Dependencies
-_SequelQC_ has been tested in Linux and Mac environments and it requires following programs to be in the path
+_SequelTools_ has been tested in Linux and Mac environments and it requires following programs to be in the path
 1. Samtools
 2. Python (version 2 or 3)
 3. R
@@ -32,11 +32,11 @@ For a more permanent solution, you can add the export path line to the `.bashrc`
 PATH=$PATH:/path/to/SequelQC
 ```
 
-No compilation is required so you are now done with installation! 
+No compilation is required, and only standard R packages and Python libraries are used so you are now done with installation! 
 
 ## Running SequelTools
 
-For a test data set we recommend using the same data set used in the paper, XXXXXXXXXXXXX
+For a test data set we recommend using the same data set as we used in the paper, XXXXXXXXXXXXX
 
 The `SequelTools.sh` is the main script to execute. This script will call all other necessary scripts. You can test whether the main script was properly installed by calling the script alone:
 
@@ -52,21 +52,9 @@ bash SequelTools.sh
 
 This should bring up the help menu.
 
+For the QC tool and Read Subsampling tools _SequelTools_ has only two required arguments, `-t` and `-u`. The argument `-t` specifies which `t`ool is being used, and the argument `-u` identifies a file listing all the locations of the s`u`bread BAM files.  The Read Filtering tool, unlike the QC and Read Subsampling tools, requires scraps files in addition to subreads files and therefore requires the additional parameter `-c`, which identifies a file listing all the locations of the s`c`raps BAM files.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-_SequelQC_ has only one required argument, `-u`. The argument `-u` requires a file listing all the locations of the s`u`bread BAM files.  With this argument alone _SequelQC_ will run without scraps files.  _SequelQC_ may also be run with scraps files by including the `-c` parameter which requires a file listing the location of all s`c`raps BAM files.  In each case the format is simply one filename per line.  With scraps files _SequelQC_ takes longer to run, but also creates more plots and provides more information within the same plots regarding continuous long reads (CLRs).
+While the QC and Read Subsampling tools do not require scraps files, these tools can also be run with scraps files by including the `-c` parameter.  In the case of `-u` and `-c` the format is a file of filenames, in other words, simply one BAM filename per line.  With scraps files _SequelTools_ takes longer to run, but scraps files provide additionaly functionality for the Read Subsampling tool, and for the QC tool more plots are created and more information is provided within the same plots regarding CLRs.
 
 The easy way to generate these files is using the find command:
 
@@ -74,6 +62,12 @@ The easy way to generate these files is using the find command:
 find $(pwd) -name "*subreads.bam"  > subreads.txt
 find $(pwd) -name "*scraps.bam"  > scraps.txt
 ```
+
+
+
+
+
+
 
 Once done, to run _SequelQC_ using all default arguments execute `SequelQC.sh` as follows:
 
