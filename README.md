@@ -2,25 +2,23 @@
 
 _SequelTools_ is a fast and easy to install command-line program that provides a collection of tools for working with multiple SMRTcells of PacBio Sequel raw sequece data containing three tools: the Quality Control (QC) tool, the Read Subsampling tool, and the Read Filtering tool.  The QC tool produces multiple statistics and publication quality plots describing the quality of the data including N50, read length and count statistics, PSR, and ZOR.  The Read Subsampling tool allows the user to subsample their BAM format sequence files by one or more potential criteria: longest subreads per CLR, or random CLR selection. This tool provides the user a filtering functionality and requires both scraps files and subreads files to function. Filtering can be done using one or more of the following criteria: 1) minimum CLR length, 2) having at least one complete pass of the DNA molecule past the polymerase, or 3) Normal adapters for scrap
 
-
-
-
-
-
-
 ## Installation
 
 ### Dependencies
-_SequelQC_ has been tested in a Linux environment and it requires following programs to be in the path
+_SequelQC_ has been tested in Linux and Mac environments and it requires following programs to be in the path
 1. Samtools
 2. Python (version 2 or 3)
 3. R
 
-Both R and Python should be pre-installed if you're using Linux. Samtools can be easily installed from here:
+Both R and Python should be pre-installed if you're using Linux. Python comes pre-installed on Macs, but R is not. 
+Samtools can be easily installed from here:
 http://www.htslib.org
 
-### SequelQC installation
-Once installed, clone the github repository, make the scripts executables and add it to your path like so:
+R can be easily installed from here:
+https://cran.r-project.org/bin/macosx/
+
+### SequelTools installation
+Once installed, clone the github repository, make the script executables, and add it to your path like so:
 
 ```
 git clone https://github.com/ISUgenomics/SequelQC.git
