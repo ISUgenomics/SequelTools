@@ -63,20 +63,7 @@ find $(pwd) -name "*subreads.bam"  > subreads.txt
 find $(pwd) -name "*scraps.bam"  > scraps.txt
 ```
 
-Once these files are created, to run _SequelTools_' QC tool using all default arguments execute `SequelTools.sh` as follows:
-
-```
-./SequelTools.sh -t Q -u subFiles.txt
-```
-
-or 
-
-```
-bash SequelTools.sh -t Q -u subFiles.txt
-```
-
-or
-
+Once these files are created, to run _SequelTools_' QC tool using all default arguments, with scraps files, execute `SequelTools.sh` as follows:
 
 ```
 ./SequelTools.sh -t Q -u subFiles.txt -c scrFiles.txt
@@ -88,19 +75,19 @@ or
 bash SequelTools.sh -t Q -u subFiles.txt -c scrFiles.txt
 ```
 
-To run _SequelTools_' Read Subsampling tool in its simplest construction, subsampling using both criteria execute `SequelTools.sh` as follows:
+and without scraps files:
 
 ```
-./SequelTools.sh -t S -u subFiles.txt -T lr
+./SequelTools.sh -t Q -u subFiles.txt
 ```
 
-or
+or 
 
 ```
-bash SequelTools.sh -t S -u subFiles.txt -T lr
+bash SequelTools.sh -t Q -u subFiles.txt
 ```
 
-or
+To run _SequelTools_' Read Subsampling tool in its simplest construction, subsampling using both criteria, with scraps files, execute `SequelTools.sh` as follows:
 
 ```
 ./SequelTools.sh -t S -u subFiles.txt -c scrapsFiles.txt -T lr
@@ -112,6 +99,17 @@ or
 bash SequelTools.sh -t S -u subFiles.txt -c scrapsFiles.txt -T lr
 ```
 
+and without scraps files:
+
+```
+./SequelTools.sh -t S -u subFiles.txt -T lr
+```
+
+or
+
+```
+bash SequelTools.sh -t S -u subFiles.txt -T lr
+```
 
 To run _SequelTools_' Read Filtering tool in its simplest construction using  all three  possible  filtering  criteria  and  using  1000  base  pairs  as  the  minimum  CLR length execute `SequelTools.sh` as follows:
 
@@ -125,39 +123,53 @@ or
 bash SequelTools.sh -t F -u smallSubs.txt -c smallScraps.txt -C -P -N -Z 1000
 ```
 
-
-
-
-
-
-
-
-
 ## Other Arguments
 
-_SequelQC_ has many other arguments that are worth considering before running it on your data. You can get an updated and comprehensive summary of these arguments by accessing the help menu.  The help menu will present itself if the user calls _SequelQC_ with no arguments, calls _SequelQC_ with the -h argument, or makes any number of mistakes while running the program.
+_SequelTools_ has many other arguments that are worth considering before running it on your data. You can get an updated and comprehensive summary of these arguments by accessing the help menu.  The help menu will present itself if the user calls _SequelTools_ with no arguments, calls _SequelTools_ with the -h argument, or makes any number of mistakes while running the program.
 
 One important argument is `-n`, which sets the number of threads to use for samtools.  The default is 1, but the more threads used the faster the program will run.  
 
-Another optional argument is `-o`, which sets the directory for outputting all final tables and plots.  The default is to make a folder called SequelQCresults and put the final table and plots there.  If the folder SequelQCresults is already present when you run _SequelQC_, all contents within the folder will be erased before the new results are written there.  For that reason if you plan to run the program on multiple datasets you'll either want to do it in seperate folders or use the `-o` option to create multiple output folders.
+Another optional argument is `-o`, which sets the directory for outputting all final tables and plots.  The default is to make a folder called SequelToolsResults and put the final table and plots there.  If the folder SequelToolsResults is already present when you run _SequelTools_, all contents within the folder will be erased before the new results are written there.  For that reason if you plan to run the program on multiple datasets you'll either want to do it in seperate folders or use the `-o` option to create multiple output folders.
 
-The `-v` argument allows the user to get updates on what _SequelQC_ is doing as it does it, and the `-k` argument tells _SequelQC_ to keep all intermediate files.  These files are created in the directory _SequelQC_ is ran in and are normally deleted before the program finishes.  The `-k` parameter is very useful for rerunning _SequelQC_ using different plotting parameters or using a custom R script.  It could also be used to give the user raw data they would not otherwise be given. Along with the `-k` parameter, if the user has already generated intermediate files, the user can comment out the lines in `SequelQC.sh` that call samtools and Python.  This will cut out the large majority of the runtime.  As for using a custom R script for plotting, the user can make their own plotting script or modify ours and then simply replace the name of our R script in `SequelQC.sh` with the name of the user's script.
+The `-v` argument allows the user to get updates on what _SequelTools_ is doing as it runs.
 
-The `-g` argument allows the user to see fewer groups of reads in the final table and plots.  By default the four groups are the full Continuous Long Read (CLR), CLRs with subreads (referred to as subedCLRs), all subreads, and the longest subreads for each subedCLR.  The default parameter to provide to the `-g` argument is `a` for all.  The user can choose instead to see only subedCLRs and all subreads by providing the parameter `b` for basic.
+### QC Tool arguments
+The `-k` argument tells _SequelTools_ to keep all intermediate QC files.  These files are created in the output folder and are normally deleted before the program finishes.  The `-k` parameter is very useful for rerunning _SequelTools_' QC Tool multiple times using different plotting parameters or using a custom R script.  It could also be used to give the user raw data they would not otherwise be given. 
+
+The `-g` argument allows the user to see fewer groups of reads in the final table and plots.  By default the four groups are the full CLRs, CLRs with subreads (referred to as subedCLRs), all subreads, and the longest subreads for each subedCLR.  The default parameter to provide to the `-g` argument is `a` for all.  The user can choose instead to see only subedCLRs and all subreads by providing the parameter `b` for basic.
 
 While the summary statistics table is always produced, the user can request more or fewer plots based on their needs using the `-p` argument. The full suite of plots is barplots of A) N50s, B) L50s, and C) total bases, histograms of D) read lengths, E) subreads per subedCLR, and F) adapters per CLR, boxplots of G) subread and H) subedCLR read lengths with N50s, and I)ZOR and J) PSR plots. The user can also request an intermediate (A,C,G,H,I, & J) or basic (A & C) suite of plots, with the intermediate selection of plots being default. 
 
-### Using alternative R plotting scripts
+#### Using alternative R plotting scripts
 
-Some users may want to modify _SequelQC_'s plots and the summary statistics table or to use _SequelQC_'s intermediate files to generate completely different plots.  Such users will need to run _SequelQC_ once using the `-k` argument to generate the indermediate files and retain them at the end of _SequelQC_'s operation.  Next, the user will need to create their custom R script.  If the user wishes to modify _SequelQC_'s plots, rather than generate completely different plots, said user should start by copying and renaming either `plotForSequelQC_wScraps.R` or `plotForSequelQC_noScraps.R` depending on whether said user is running _SequelQC_ with or without scraps files, respectively. 
+Some users may want to modify _SequelTools_' plots and the summary statistics table or to use _SequelTools_' intermediate files to generate completely different plots.  Such users will need to run _SequelTools_ once using the `-k` argument to generate the indermediate files and retain them at the end of _SequelTools_' operation.  Next, the user will need to create their custom R script.  If the user wishes to modify _SequelTools_' plots, rather than generate completely different plots, said user should start by copying and renaming either `plotForSequelQC_wScraps.R` or `plotForSequelQC_noScraps.R` depending on whether said user is running _SequelTools_ with or without scraps files, respectively. 
 
-Next the user will need to modify the copied script as needed.  During the process of writing scripts it is common to run the script several times to test new code as it is being written.  In order to make this process faster for the user we have added a parameter `-s` which will skip the read length calculations with samtools and the statistical calculations with Python which together generate the intermediate files.  Together these steps make up most of the runtime of _SequelQC_, therefore skipping these steps allows for rapid testing of alternative plotting scripts. Whether the user is modifying a _SequelQC_ R plotting script or using one created from scratch, at this time the user will also need to provide the custom plotting script to _SequelQC_.  This can be done by using the `-r` argument followed by the name of the custom script.  Keep in mind that the `-k` argument will remain necessary or else the intermediate files will all be deleted at the end of _SequelQC_'s operation.
+Next the user will need to modify the copied script as needed.  During the process of writing scripts it is common to run the script several times to test new code as it is being written.  In order to make this process faster for the user we have added a parameter `-s` which will skip the read length calculations with samtools and the statistical calculations with Python which together generate the intermediate files.  Together these steps make up most of the runtime of _SequelTools_' QC Tool, therefore skipping these steps allows for rapid testing of alternative plotting scripts. Whether the user is modifying a _SequelTools_ R plotting script or using one created from scratch, at this time the user will also need to provide the custom plotting script to _SequelTools_.  This can be done by using the `-r` argument followed by the name of the custom script.  Keep in mind that the `-k` argument will remain necessary or else the intermediate files will all be deleted at the end of _SequelTools_' operation.
 
 An example of running \textit{SequelQC} with an alternative R plotting script with minimal recommended arguments with scraps files:
 
-\indent\code{bash SequelQC.sh -u subFiles.txt -c scrFiles -k -s -r altRscript\_wScraps.R}
+```
+./SequelTools.sh -t Q -u subFiles.txt -c scrFiles -k -s -r altRscript\_wScraps.R
+```
+
+or
+
+```
+bash SequelTools.sh -t Q -u subFiles.txt -c scrFiles -k -s -r altRscript\_wScraps.R
+```
 
 and without scraps files:
 
-\indent\code{bash SequelQC.sh -u subFiles.txt -k -s -r altRscript\_noScraps.R}
+```
+./SequelTools.sh -t Q -u subFiles.txt -k -s -r altRscript\_noScraps.R
+```
 
+or
+
+```
+bash SequelTools.sh -t Q -u subFiles.txt -k -s -r altRscript\_noScraps.R
+```
+
+### Read Subsampling Tool arguments
+
+### Read Filtering Tool arguments
