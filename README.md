@@ -1,11 +1,13 @@
 # SequelTools
 
-_SequelTools_ is a fast and easy to install command-line program that provides a collection of tools for working with multiple SMRTcells of PacBio Sequel raw sequece data containing three tools: the Quality Control (QC) tool, the Read Subsampling tool, and the Read Filtering tool.  The QC tool produces multiple statistics and publication quality plots describing the quality of the data including N50, read length and count statistics, PSR, and ZOR.  The Read Subsampling tool allows the user to subsample their BAM format sequence files by one or more potential criteria: longest subreads per continuous long read (CLR), or random CLR selection. This tool provides the user a filtering functionality and requires both scraps files and subreads files to function. Filtering can be done using one or more of the following criteria: 1) minimum CLR length, 2) having at least one complete pass of the DNA molecule past the polymerase, or 3) Normal adapters for scrap
+XXXXXXXXXStart with a link to the paper, ask people to read it and insist they cite it whenever publishing/presenting using results from _SequelTools_XXXXXXXXX
+
+_SequelTools_ is a fast and easy to install command-line program that provides a collection of tools for working with multiple SMRTcells of BAM format PacBio Sequel raw sequece data.  _SequelTools_ contains three tools: the Quality Control (QC) tool, the Read Subsampling tool, and the Read Filtering tool.  The QC tool produces multiple statistics and publication quality plots describing the quality of the data including N50, read length and count statistics, PSR, and ZOR.  The Read Subsampling tool allows the user to subsample their sequence files by one or more potential criteria: longest subreads per continuous long read (CLR), or random CLR selection. This tool provides the user a filtering functionality and requires both scraps files and subreads files to function. Filtering can be done using one or more of the following criteria: 1) minimum CLR length, 2) having at least one complete pass of the DNA molecule past the polymerase, or 3) Normal adapters for scraps reads.
 
 ## Installation
 
 ### Dependencies
-_SequelTools_ has been tested in Linux and Mac environments and it requires following programs to be in the path
+_SequelTools_ has been tested in Linux and Mac environments and requires the following programs to be in the path
 1. Samtools
 2. Python (version 2 or 3)
 3. R
@@ -29,14 +31,14 @@ export PATH=$PATH:"$(pwd)"
 For a more permanent solution, you can add the export path line to the `.bashrc` file in your home directory for Linux.  For Mac users use `.bash_profile` instead of `.bashrc`.
 
 ```
-PATH=$PATH:/path/to/SequelQC
+PATH=$PATH:/path/to/SequelTools
 ```
 
 No compilation is required, and only standard R packages and Python libraries are used so you are now done with installation! 
 
 ## Running SequelTools
 
-For a test data set we recommend using the same data set as we used in the paper, XXXXXXXXXXXXX
+For a test data set we recommend using the same data set as we used in the paper, XXXXXXXXXXXXX.  Running _SequelTools_' QC tool with all groups and plots will create the figures in the "Figures" folder on this GitHub page.
 
 The `SequelTools.sh` is the main script to execute. This script will call all other necessary scripts. You can test whether the main script was properly installed by calling the script alone:
 
@@ -52,9 +54,9 @@ bash SequelTools.sh
 
 This should bring up the help menu.
 
-For the QC tool and Read Subsampling tools _SequelTools_ has only two required arguments, `-t` and `-u`. The argument `-t` specifies which `t`ool is being used, and the argument `-u` identifies a file listing all the locations of the s`u`bread BAM files.  The Read Filtering tool, unlike the QC and Read Subsampling tools, requires scraps files in addition to subreads files and therefore requires the additional parameter `-c`, which identifies a file listing all the locations of the s`c`raps BAM files.
+For the QC tool and Read Subsampling tools _SequelTools_ has only two required arguments, `-t` and `-u`. The argument `-t` specifies which tool is being used, and the argument `-u` identifies a file listing all the locations of the subread BAM files.  The Read Filtering tool, unlike the QC and Read Subsampling tools, requires scraps files in addition to subreads files and therefore requires the additional parameter `-c`, which identifies a file listing all the locations of the scraps BAM files.
 
-While the QC and Read Subsampling tools do not require scraps files, these tools can also be run with scraps files by including the `-c` parameter.  In the case of `-u` and `-c` the format is a file of filenames, in other words, simply one BAM filename per line.  With scraps files _SequelTools_ takes longer to run, but scraps files provide additionaly functionality for the Read Subsampling tool, and for the QC tool more plots are created and more information is provided within the same plots regarding CLRs.
+While the QC and Read Subsampling tools do not require scraps files, these tools can also be run with scraps files by including the `-c` parameter.  In the case of `-u` and `-c` the format is a file of filenames, in other words, simply one BAM filename per line.  With scraps files _SequelTools_ takes longer to run, but scraps files provide additional functionality for the Read Subsampling tool, and for the QC tool more plots are created and more information is provided within the same plots regarding CLRs.
 
 The easy way to generate these files is using the find command:
 
@@ -95,7 +97,7 @@ The `-T` argument is how the user chooses by which criteria _SequelTools_' Read 
 
 When using the random CLR subsampling option, although a default (0.1) is provided, it is recommended that the user provide a value from 0 to 1 which specifies the proportion of CLRs to be retained in random CLR subsampling.  This can be done using the argument `-R`
 
-To run _SequelTools_' Read Subsampling tool in its simplest construction, subsampling using both criteria, with scraps files, execute `SequelTools.sh` as follows:
+To run _SequelTools_' Read Subsampling tool in its simplest construction, subsampling using both criteria with scraps files, execute `SequelTools.sh` as follows:
 
 ```
 ./SequelTools.sh -t S -u subFiles.txt -c scrapsFiles.txt -T lr
@@ -145,7 +147,7 @@ One important argument is `-n`, which sets the number of threads to use for samt
 
 Another optional argument is `-o`, which sets the directory for outputting all final tables and plots.  The default is to make a folder called SequelToolsResults and put the final table and plots there.  If the folder SequelToolsResults is already present when you run _SequelTools_, all contents within the folder will be erased before the new results are written there.  For that reason if you plan to run the program on multiple datasets you'll either want to do it in seperate folders or use the `-o` option to create multiple output folders.
 
-The `-v` argument allows the user to get updates on what _SequelTools_ is doing as it runs.
+The `-v` argument allows the user to get more detailed updates on what _SequelTools_ is doing as it runs.
 
 ### QC Tool arguments
 The `-k` argument tells _SequelTools_ to keep all intermediate QC files.  These files are created in the output folder and are normally deleted before the program finishes.  The `-k` parameter is very useful for rerunning _SequelTools_' QC Tool multiple times using different plotting parameters or using a custom R script.  It could also be used to give the user raw data they would not otherwise be given. 
@@ -156,35 +158,35 @@ While the summary statistics table is always produced, the user can request more
 
 #### Using alternative R plotting scripts
 
-Some users may want to modify _SequelTools_' plots and the summary statistics table or to use _SequelTools_' intermediate files to generate completely different plots.  Such users will need to run _SequelTools_ once using the `-k` argument to generate the indermediate files and retain them at the end of _SequelTools_' operation.  Next, the user will need to create their custom R script.  If the user wishes to modify _SequelTools_' plots, rather than generate completely different plots, said user should start by copying and renaming either `plotForSequelQC_wScraps.R` or `plotForSequelQC_noScraps.R` depending on whether said user is running _SequelTools_ with or without scraps files, respectively. 
+Some users may want to modify _SequelTools_' QC plots and the summary statistics table or to use _SequelTools_' intermediate QC files to generate completely different plots.  Such users will need to run _SequelTools_' QC tool once using the `-k` argument to generate the indermediate files and retain them at the end of _SequelTools_' operation.  Next, the user will need to create their custom R script.  If the user wishes to modify _SequelTools_' QC plots, rather than generate completely different plots, said user should start by copying and renaming either `plotForSequelQC_wScraps.R` or `plotForSequelQC_noScraps.R` depending on whether said user is running the QC tool with or without scraps files, respectively. 
 
-Next the user will need to modify the copied script as needed.  During the process of writing scripts it is common to run the script several times to test new code as it is being written.  In order to make this process faster for the user we have added a parameter `-s` which will skip the read length calculations with samtools and the statistical calculations with Python which together generate the intermediate files.  Together these steps make up most of the runtime of _SequelTools_' QC Tool, therefore skipping these steps allows for rapid testing of alternative plotting scripts. Whether the user is modifying a _SequelTools_ R plotting script or using one created from scratch, at this time the user will also need to provide the custom plotting script to _SequelTools_.  This can be done by using the `-r` argument followed by the name of the custom script.  Keep in mind that the `-k` argument will remain necessary or else the intermediate files will all be deleted at the end of _SequelTools_' operation.
+Next the user will need to modify the copied script as needed.  During the process of writing scripts it is common to run the script several times to test new code as it is being written.  In order to make this process faster for the user we have added a parameter `-s` which will skip the read length calculations with samtools and the statistical calculations with Python which together generate the QC intermediate files.  Together these steps make up most of the runtime of _SequelTools_' QC Tool, therefore skipping these steps allows for rapid testing of alternative plotting scripts. Whether the user is modifying a _SequelTools_ R QC plotting script or using one created from scratch, at this time the user will also need to provide the custom plotting script to _SequelTools_.  This can be done by using the `-r` argument followed by the name of the custom script.  Keep in mind that the `-k` argument will remain necessary or else the intermediate files will all be deleted at the end of _SequelTools_' operation.
 
-An example of running \textit{SequelQC} with an alternative R plotting script with minimal recommended arguments with scraps files:
+An example of running _SequelTools_ with an alternative R plotting script with minimal recommended arguments with scraps files:
 
 ```
-./SequelTools.sh -t Q -u subFiles.txt -c scrFiles -k -s -r altRscript\_wScraps.R
+./SequelTools.sh -t Q -u subFiles.txt -c scrFiles -k -s -r altRscript_wScraps.R
 ```
 
 or
 
 ```
-bash SequelTools.sh -t Q -u subFiles.txt -c scrFiles -k -s -r altRscript\_wScraps.R
+bash SequelTools.sh -t Q -u subFiles.txt -c scrFiles -k -s -r altRscript_wScraps.R
 ```
 
 and without scraps files:
 
 ```
-./SequelTools.sh -t Q -u subFiles.txt -k -s -r altRscript\_noScraps.R
+./SequelTools.sh -t Q -u subFiles.txt -k -s -r altRscript_noScraps.R
 ```
 
 or
 
 ```
-bash SequelTools.sh -t Q -u subFiles.txt -k -s -r altRscript\_noScraps.R
+bash SequelTools.sh -t Q -u subFiles.txt -k -s -r altRscript_noScraps.R
 ```
 
-### Read Subsampling and Read Filtering Tool formatting argument
+### The Read Subsampling and Read Filtering Tool formatting argument
 
 The `-f` argument allows the user to choose the format of the results files.  The options for this argument are `s` for SAM format, `b` for BAM format, and `2` for both formats.
 
