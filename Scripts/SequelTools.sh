@@ -27,8 +27,8 @@ function print_help_menu() {
 	     CLR selection.
 	     'F' for filtering reads by CLR minimum length and/or having at 
                  least one complete pass of the DNA molecule past the polymerase
-                 and/or normal adapters for scraps. Scraps files are required 
-                 for this tool.
+                 and/or normal adapters for scraps reads. Scraps files are 
+                 required for this tool.
 	     No default is provided.
         -n : The number of threads to use for extracting information from .bam 
              files for each .bam file. Default is '1'
