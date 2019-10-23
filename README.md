@@ -63,6 +63,8 @@ find $(pwd) -name "*subreads.bam"  > subreads.txt
 find $(pwd) -name "*scraps.bam"  > scraps.txt
 ```
 
+### The QC tool
+
 Once these files are created, to run _SequelTools_' QC tool using all default arguments, with scraps files, execute `SequelTools.sh` as follows:
 
 ```
@@ -87,6 +89,12 @@ or
 bash SequelTools.sh -t Q -u subFiles.txt
 ```
 
+### The Read Subsampling tool
+
+The `-T` argument is how the user chooses by which criteria _SequelTools_' Read Subsampling tool will subsample.  The options for criteria are `l` for longestt subreads and `r` for random CLR subsampling. 
+
+When using the random CLR subsampling option, although a default (0.1) is provided, it is recommended that the user provide a value from 0 to 1 which specifies the proportion of CLRs to be retained in random CLR subsampling.  This can be done using the argument `-R`
+
 To run _SequelTools_' Read Subsampling tool in its simplest construction, subsampling using both criteria, with scraps files, execute `SequelTools.sh` as follows:
 
 ```
@@ -110,6 +118,12 @@ or
 ```
 bash SequelTools.sh -t S -u subFiles.txt -T lr
 ```
+
+### The Read Filtering tool
+
+When using _SequelTools_' Read Filtering tool The user must choose one or more criteria for filtering.  The `-C` argument filters by minimum CLR length, the `-P` tool filters by number of complete passes of the DNA template, and the `-N` filters by normal scraps adapters defined as having a ZMW classification annotation of 'N' for 'normal' and a scrap region-type annotation of 'A' for 'adapter'.
+
+When filtering by CLR minimum length, the minimum length threshold for retaining each CLR must be provided using the argument `-Z`.
 
 To run _SequelTools_' Read Filtering tool in its simplest construction using  all three  possible  filtering  criteria  and  using  1000  base  pairs  as  the  minimum  CLR length execute `SequelTools.sh` as follows:
 
@@ -170,18 +184,8 @@ or
 bash SequelTools.sh -t Q -u subFiles.txt -k -s -r altRscript\_noScraps.R
 ```
 
-### Read Subsampling Tool arguments
+### Read Subsampling and Read Filtering Tool formatting argument
 
 The `-f` argument allows the user to choose the format of the results files.  The options for this argument are `s` for SAM format, `b` for BAM format, and `2` for both formats.
 
-The `-T` argument is how the user chooses by which criteria _SequelTools_' Read Subsampling tool will subsample.  The options for criteria are `l` for longestt subreads and `r` for random CLR subsampling. 
 
-When using the random CLR subsampling option, although a default (0.1) is provided, it is recommended that the user provide a value from 0 to 1 which specifies the proportion of CLRs to be retained in random CLR subsampling.  This can be done using the argument `-R`
-
-### Read Filtering Tool arguments
-
-The `-f` argument allows the user to choose the format of the results files.  The options are `s` for SAM format, `b` for BAM format, and `2` for both formats.
-
-When using _SequelTools_' Read Filtering tool The user must choose one or more criteria for filtering.  The `-C` argument filters by minimum CLR length, the `-P` tool filters by number of complete passes of the DNA template, and the `-N` filters by normal scraps adapters defined as having a ZMW classification annotation of 'N' for 'normal' and a scrap region-type annotation of 'A' for 'adapter'.
-
-When filtering by CLR minimum length, the minimum length threshold for retaining each CLR must be provided using the argument `-Z`.
