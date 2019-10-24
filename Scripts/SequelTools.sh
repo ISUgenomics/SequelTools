@@ -98,38 +98,38 @@ helpChunk
 #Set an array of files and line numbers to pass to R .  Arg 1=ARGS_FOR_R Arg 2 is I
 function make_args_for_R_array() {
     if [ "$NOSCRAPS" == true ]; then
-        FILES_FOR_R+="$BASE.SMRTcellStats_noScraps.txt,"
-        FILES_FOR_R+="$BASE.readLens.sub.txt,"
-        FILES_FOR_R+="$BASE.readLens.longSub.txt,"
-        LENGTHS_FOR_R+="$(wc -l "$BASE.SMRTcellStats_noScraps.txt" | awk '{print $1}'),"
-        LENGTHS_FOR_R+="$(wc -l "$BASE.readLens.sub.txt" | awk '{print $1}'),"
-        LENGTHS_FOR_R+="$(wc -l "$BASE.readLens.longSub.txt" | awk '{print $1}'),"
+        FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.SMRTcellStats_noScraps.txt),"
+	FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.readLens.sub.txt),"
+	FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.readLens.longSub.txt),"
+	LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.SMRTcellStats_noScraps.txt)" | awk '{print $1}'),"
+	LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.readLens.sub.txt)" | awk '{print $1}'),"
+	LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.readLens.longSub.txt)" | awk '{print $1}'),"
     else
         if [ "$GROUPS_DESIRED" == "a" ]; then
-            FILES_FOR_R+="$BASE.SMRTcellStats_wScrapsA.txt,"
-            FILES_FOR_R+="$BASE.readLens.sub.txt,"
-            FILES_FOR_R+="$BASE.readLens.clr.txt,"
-            FILES_FOR_R+="$BASE.readLens.subedClr.txt,"
-            FILES_FOR_R+="$BASE.readLens.longSub.txt,"
-            FILES_FOR_R+="$BASE.clrStats.txt,"
-            LENGTHS_FOR_R+="$(wc -l "$BASE.SMRTcellStats_wScrapsA.txt" | awk '{print $1}'),"
-            LENGTHS_FOR_R+="$(wc -l "$BASE.readLens.sub.txt" | awk '{print $1}'),"
-            LENGTHS_FOR_R+="$(wc -l "$BASE.readLens.clr.txt" | awk '{print $1}'),"
-            LENGTHS_FOR_R+="$(wc -l "$BASE.readLens.subedClr.txt" | awk '{print $1}'),"
-            LENGTHS_FOR_R+="$(wc -l "$BASE.readLens.longSub.txt" | awk '{print $1}'),"
-            LENGTHS_FOR_R+="$(wc -l "$BASE.clrStats.txt" | awk '{print $1}'),"
+	    FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.SMRTcellStats_wScrapsA.txt,)"
+	    FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.readLens.sub.txt,)"
+	    FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.readLens.clr.txt,)"
+	    FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.readLens.subedClr.txt,)"
+	    FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.readLens.longSub.txt,)"
+	    FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.clrStats.txt,)"
+	    LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.SMRTcellStats_wScrapsA.txt)" | awk '{print $1}'),"
+	    LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.readLens.sub.txt)" | awk '{print $1}'),"
+	    LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.readLens.clr.txt)" | awk '{print $1}'),"
+	    LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.readLens.subedClr.txt)" | awk '{print $1}'),"
+	    LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.readLens.longSub.txt)" | awk '{print $1}'),"
+	    LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.clrStats.txt)" | awk '{print $1}'),"
 
         elif [ "$GROUPS_DESIRED" == "b"   ]; then
-            FILES_FOR_R+="$BASE.SMRTcellStats_wScrapsB.txt,"
-            FILES_FOR_R+="$BASE.readLens.sub.txt,"
-            FILES_FOR_R+="$BASE.readLens.subedClr.txt,"
-            FILES_FOR_R+="$BASE.readLens.longSub.txt,"
-            FILES_FOR_R+="$BASE.clrStats.txt,"
-            LENGTHS_FOR_R+="$(wc -l "$BASE.SMRTcellStats_wScrapsB.txt" | awk '{print $1}'),"
-            LENGTHS_FOR_R+="$(wc -l "$BASE.readLens.sub.txt" | awk '{print $1}'),"
-            LENGTHS_FOR_R+="$(wc -l "$BASE.readLens.subedClr.txt" | awk '{print $1}'),"
-            LENGTHS_FOR_R+="$(wc -l "$BASE.readLens.longSub.txt" | awk '{print $1}'),"
-            LENGTHS_FOR_R+="$(wc -l "$BASE.clrStats.txt" | awk '{print $1}'),"
+            FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.SMRTcellStats_wScrapsB.txt,)"
+	    FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.readLens.sub.txt,)"
+	    FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.readLens.subedClr.txt,)"
+	    FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.readLens.longSub.txt,)"
+	    FILES_FOR_R+="$OUT_FOLD/$(basename $BASE.clrStats.txt,)"
+	    LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.SMRTcellStats_wScrapsB.txt)" | awk '{print $1}'),"
+	    LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.readLens.sub.txt)" | awk '{print $1}'),"
+	    LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.readLens.subedClr.txt)" | awk '{print $1}'),"
+	    LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.readLens.longSub.txt)" | awk '{print $1}'),"
+	    LENGTHS_FOR_R+="$(wc -l "$OUT_FOLD/$(basename $BASE.clrStats.txt)" | awk '{print $1}'),"
         fi
     fi
 }
@@ -618,7 +618,7 @@ if [ "$TOOL" == "Q" ]; then
             fi
 
             NOBAM=${SUBREADS_FILES_ARRAY_NOBAM[I]}
-            samtools view --threads "$NTHREADS" -O SAM "$BAM" | awk '{print $1}' > "$OUT_FOLD/$NOBAM.seqNames" || {
+	    samtools view --threads "$NTHREADS" -O SAM "$BAM" | awk '{print $1}' > "$OUT_FOLD/$(basename $NOBAM.seqNames)" || {
             echo >&2 "$FAILED_EXTRACTION"
             exit 1
             }
@@ -635,7 +635,7 @@ if [ "$TOOL" == "Q" ]; then
                 fi
 
                 NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
-                samtools view --threads "$NTHREADS" -O SAM "$BAM" | awk '{print $1,"\t",$21,"\t",$22}' > "$OUT_FOLD/$NOBAM.seqNamesPlus" || {
+		samtools view --threads "$NTHREADS" -O SAM "$BAM" | awk '{print $1,"\t",$21,"\t",$22}' > "$OUT_FOLD/$(basename $NOBAM.seqNamesPlus)" || {
                 echo >&2 "$FAILED_EXTRACTION"
                 exit 1
                 }
@@ -672,18 +672,18 @@ if [ "$TOOL" == "Q" ]; then
  
         if [ $TOSKIP == false ]; then
             if [ $NOSCRAPS == true ]; then
-                generateReadLenStats_noScraps.py "$OUT_FOLD/$SUBREADS_NOBAM.seqNames" "$OUT_FOLD/$BASE.SMRTcellStats_noScraps.txt" "$OUT_FOLD/$BASE.readLens.sub.txt" "$OUT_FOLD/$BASE.readLens.longSub.txt" || {
+          	generateReadLenStats_noScraps.py "$OUT_FOLD/$(basename $SUBREADS_NOBAM.seqNames)" "$OUT_FOLD/$(basename $BASE.SMRTcellStats_noScraps.txt)" "$OUT_FOLD/$(basename $BASE.readLens.sub.txt)" "$OUT_FOLD/$(basename $BASE.readLens.longSub.txt)" || {
                 echo >&2 "$FAILED_RLSTATS"
                 exit 1
                 }
             else
                 if [ "$GROUPS_DESIRED" == "a" ]; then
-                    generateReadLenStats_wScraps.py "$OUT_FOLD/$SCRAPS_NOBAM.seqNamesPlus" "$OUT_FOLD/$SUBREADS_NOBAM.seqNames" "$OUT_FOLD/$BASE.SMRTcellStats_wScrapsA.txt" "$OUT_FOLD/$BASE.readLens.sub.txt" "$OUT_FOLD/$BASE.readLens.clr.txt" "$OUT_FOLD/$BASE.readLens.subedClr.txt" "$OUT_FOLD/$BASE.readLens.longSub.txt" "$OUT_FOLD/$BASE.clrStats.txt" "$GROUPS_DESIRED" || {
+	            generateReadLenStats_wScraps.py "$OUT_FOLD/$(basename $SCRAPS_NOBAM.seqNamesPlus)" "$OUT_FOLD/$(basename $SUBREADS_NOBAM.seqNames)" "$OUT_FOLD/$(basename $BASE.SMRTcellStats_wScrapsA.txt)" "$OUT_FOLD/$(basename $BASE.readLens.sub.txt)" "$OUT_FOLD/$(basename $BASE.readLens.clr.txt)" "$OUT_FOLD/$(basename $BASE.readLens.subedClr.txt)" "$OUT_FOLD/$(basename $BASE.readLens.longSub.txt)" "$OUT_FOLD/$(basename $BASE.clrStats.txt)" "$GROUPS_DESIRED" || {
                     echo >&2 "$FAILED_RLSTATS"
                     exit 1
                     }
                 elif [ "$GROUPS_DESIRED" == "b" ]; then
-                    generateReadLenStats_wScraps.py "$OUT_FOLD/$SCRAPS_NOBAM.seqNamesPlus" "$OUT_FOLD/$SUBREADS_NOBAM.seqNames" "$OUT_FOLD/$BASE.SMRTcellStats_wScrapsB.txt" "$OUT_FOLD/$BASE.readLens.sub.txt" "$OUT_FOLD/$BASE.readLens.clr.txt" "$OUT_FOLD/$BASE.readLens.subedClr.txt" "$OUT_FOLD/$BASE.readLens.longSub.txt" "$OUT_FOLD/$BASE.clrStats.txt" "$GROUPS_DESIRED" || {
+			generateReadLenStats_wScraps.py "$OUT_FOLD/$(basename $SCRAPS_NOBAM.seqNamesPlus)" "$OUT_FOLD/$(basename $SUBREADS_NOBAM.seqNames)" "$OUT_FOLD/$(basename $BASE.SMRTcellStats_wScrapsB.txt)" "$OUT_FOLD/$(basename $BASE.readLens.sub.txt)" "$OUT_FOLD/$(basename $BASE.readLens.clr.txt)" "$OUT_FOLD/$(basename $BASE.readLens.subedClr.txt)" "$OUT_FOLD/$(basename $BASE.readLens.longSub.txt)" "$OUT_FOLD/$(basename $BASE.clrStats.txt)" "$GROUPS_DESIRED" || {
                     echo >&2 "$FAILED_RLSTATS"
                     exit 1
                     }
@@ -735,20 +735,20 @@ if [ "$TOOL" == "Q" ]; then
             fi
             BASE=${FILES_BASE_ARRAY[I]} 
 
-            rm "$OUT_FOLD/$SUBREADS_NOBAM.seqNames"
-            rm "$OUT_FOLD/$BASE.readLens.sub.txt"
-            rm "$OUT_FOLD/$BASE.readLens.longSub.txt"
-            rm "$OUT_FOLD/$BASE.SMRTcellStats_noScraps.txt"
+	    rm "$OUT_FOLD/$(basename $SUBREADS_NOBAM.seqNames)"
+	    rm "$OUT_FOLD/$(basename $BASE.readLens.sub.txt)"
+	    rm "$OUT_FOLD/$(basename $BASE.readLens.longSub.txt)"
+	    rm "$OUT_FOLD/$(basename $BASE.SMRTcellStats_noScraps.txt)"
 
             if [ $NOSCRAPS == false ]; then
-                rm "$OUT_FOLD/$SCRAPS_NOBAM.seqNamesPlus"
-                rm "$OUT_FOLD/$BASE.readLens.clr.txt"
-                rm "$OUT_FOLD/$BASE.readLens.subedClr.txt"
-                rm "$OUT_FOLD/$BASE.clrStats.txt"
+		rm "$OUT_FOLD/$(basename $SCRAPS_NOBAM.seqNamesPlus)"
+		rm "$OUT_FOLD/$(basename $BASE.readLens.clr.txt)"
+		rm "$OUT_FOLD/$(basename $BASE.readLens.subedClr.txt)"
+		rm "$OUT_FOLD/$(basename $BASE.clrStats.txt)"
                 if [ "$GROUPS_DESIRED" == "a" ]; then
-                    rm "$OUT_FOLD/$BASE.SMRTcellStats_wScrapsA.txt"
+	            rm "$OUT_FOLD/$(basename $BASE.SMRTcellStats_wScrapsA.txt)"
                 elif [ "$GROUPS_DESIRED" == "b" ]; then
-                    rm "$OUT_FOLD/$BASE.SMRTcellStats_wScrapsB.txt"
+		    rm "$OUT_FOLD/$(basename $BASE.SMRTcellStats_wScrapsB.txt)"
                 fi
             fi
 
@@ -867,14 +867,14 @@ elif [ $TOOL == "S" ]; then
 
         #Convert BAM files to SAM format
         NOBAM=${SUBREADS_FILES_ARRAY_NOBAM[I]}
-        samtools view --threads "$NTHREADS" -O SAM -h "$BAM" > "$OUT_FOLD/$NOBAM.sam" || {
+	samtools view --threads "$NTHREADS" -O SAM -h "$BAM" > "$OUT_FOLD/$(basename $NOBAM.sam)" || {
         echo >&2 "$FAILED_EXTRACTION"
         exit 1
         }
 
 	if [ $NOSCRAPS == false ]; then
 	    NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
-            samtools view --threads "$NTHREADS" -O SAM -h "$NOBAM.bam" > "$OUT_FOLD/$NOBAM.sam" || {
+	    samtools view --threads "$NTHREADS" -O SAM -h "$NOBAM.bam" > "$OUT_FOLD/$(basename $NOBAM.sam)" || {
             echo >&2 "$FAILED_EXTRACTION"
             exit 1
             }
@@ -893,13 +893,13 @@ elif [ $TOOL == "S" ]; then
     for SUBREADS_NOBAM in "${SUBREADS_FILES_ARRAY_NOBAM[@]}"; do
 	SCRAPS_NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
         if [ $NOSCRAPS == true  ]; then
-            subsampleReads_noScraps.py "$OUT_FOLD/$SUBREADS_NOBAM.sam" "$OUT_FOLD" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
+	    subsampleReads_noScraps.py "$OUT_FOLD/$(basename $SUBREADS_NOBAM.sam)" "$OUT_FOLD" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
             echo >&2 "ERROR: Read subsampling failed!"
             exit 1
             }
 
 	else
-            subsampleReads_wScraps.py "$OUT_FOLD/$SUBREADS_NOBAM.sam" "$OUT_FOLD/$SCRAPS_NOBAM.sam" "$OUT_FOLD" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
+	    subsampleReads_wScraps.py "$OUT_FOLD/$(basename $SUBREADS_NOBAM.sam)" "$OUT_FOLD/$(basename $SCRAPS_NOBAM.sam)" "$OUT_FOLD" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
             echo >&2 "ERROR: Read subsampling failed!"
             exit 1
             }
@@ -926,13 +926,13 @@ elif [ $TOOL == "S" ]; then
             fi
 
             #Convert BAM files to SAM format
-            samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$BASE.subSampledSubs.sam" > "$OUT_FOLD/$BASE.subSampledSubs.bam" || {
+	    samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename $BASE.subSampledSubs.sam)" > "$OUT_FOLD/$(basename $BASE.subSampledSubs.bam)" || {
             echo >&2 "ERROR: SAM to BAM conversion of subsampled subreads files failed!"
             exit 1
             }
 
 	    if [ $NOSCRAPS == false ]; then
-                samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$BASE.subSampledScraps.sam" > "$OUT_FOLD/$BASE.subSampledScraps.bam" || {
+		samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename $BASE.subSampledScraps.sam)" > "$OUT_FOLD/$(basename $BASE.subSampledScraps.bam)" || {
                 echo >&2 "ERROR: SAM to BAM conversion of subsampled scraps files failed!"
                 exit 1
                 }    
@@ -943,7 +943,7 @@ elif [ $TOOL == "S" ]; then
 		if [ $VERBOSE == true ]; then
                     echo "Beginning to delete SAM format subsampled subreads files"
 	        fi
-                rm "$OUT_FOLD/$BASE.subSampledSubs.sam" || {
+		rm "$OUT_FOLD/$(basename $BASE.subSampledSubs.sam)" || {
                 echo >&2 "ERROR: SAM format subsampled subreads file deletion failed!"
                 exit 1
                 }
@@ -952,7 +952,7 @@ elif [ $TOOL == "S" ]; then
 		    if [ $VERBOSE == true ]; then
                         echo "Beginning to delete SAM format subsampled scraps files"
 	            fi
-                    rm "$OUT_FOLD/$BASE.subSampledScraps.sam" || {
+		    rm "$OUT_FOLD/$(basename $BASE.subSampledScraps.sam)" || {
                     echo >&2 "ERROR: SAM format subsampled scraps file deletion failed!"
                     exit 1
                     }
@@ -1073,13 +1073,13 @@ elif [ "$TOOL" == "F" ]; then
 
         #Convert BAM files to SAM format
         SUBREADS_NOBAM=${SUBREADS_FILES_ARRAY_NOBAM[I]}
-        samtools view --threads "$NTHREADS" -O SAM -h "$BAM" > "$OUT_FOLD/$SUBREADS_NOBAM.sam" || {
+	samtools view --threads "$NTHREADS" -O SAM -h "$BAM" > "$OUT_FOLD/$(basename $SUBREADS_NOBAM.sam)" || {
         echo >&2 "$FAILED_EXTRACTION"
         exit 1
         }
 
         SCRAPS_NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
-        samtools view --threads "$NTHREADS" -O SAM -h "$SCRAPS_NOBAM.bam" > "$OUT_FOLD/$SCRAPS_NOBAM.sam" || {
+	samtools view --threads "$NTHREADS" -O SAM -h "$SCRAPS_NOBAM.bam" > "$OUT_FOLD/$(basename $SCRAPS_NOBAM.sam)" || {
         echo >&2 "$FAILED_EXTRACTION"
         exit 1
         }
@@ -1097,7 +1097,7 @@ elif [ "$TOOL" == "F" ]; then
     I=1
     for SUBREADS_NOBAM in "${SUBREADS_FILES_ARRAY_NOBAM[@]}"; do
         SCRAPS_NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
-        filterReads.py "$OUT_FOLD/$SUBREADS_NOBAM.sam" "$OUT_FOLD/$SCRAPS_NOBAM.sam" "$OUT_FOLD" "$CLR_FILT" "$NUMPASS_FILT" "$NORMSCRAP_FILT" "$CLR_FILT_THRESH" || {
+	filterReads.py "$OUT_FOLD/$(basename $SUBREADS_NOBAM.sam)" "$OUT_FOLD/$(basename $SCRAPS_NOBAM.sam)" "$OUT_FOLD" "$CLR_FILT" "$NUMPASS_FILT" "$NORMSCRAP_FILT" "$CLR_FILT_THRESH" || {
         echo >&2 "ERROR: Read filtering failed!"
         exit 1
         }
@@ -1120,13 +1120,13 @@ elif [ "$TOOL" == "F" ]; then
             fi
 
             #Convert BAM files to SAM format
-            samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$BASE.subreads.filt.sam" > "$OUT_FOLD/$BASE.subreads.filt.bam" || {
+	    samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename $BASE.subreads.filt.sam)" > "$OUT_FOLD/$(basename $BASE.subreads.filt.bam)" || {
             echo >&2 "ERROR: SAM to BAM conversion of filtered subreads files failed!"
             exit 1
             }
 
             if [ $NOSCRAPS == false ]; then
-                samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$BASE.scraps.filt.sam" > "$OUT_FOLD/$BASE.scraps.filt.bam" || {
+		samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename $BASE.scraps.filt.sam)" > "$OUT_FOLD/$(basename $BASE.scraps.filt.bam)" || {
                 echo >&2 "ERROR: SAM to BAM conversion of filtered scraps files failed!"
                 exit 1
                 }
@@ -1137,7 +1137,7 @@ elif [ "$TOOL" == "F" ]; then
 		if [ $VERBOSE == true ]; then
                     echo "Beginning to delete SAM format filtered subreads files"
 	        fi
-                rm "$OUT_FOLD/$BASE.subreads.filt.sam" || {
+		rm "$OUT_FOLD/$(basename $BASE.subreads.filt.sam)" || {
                 echo >&2 "ERROR: SAM format filtered subreads file deletion failed!"
                 exit 1
                 }
@@ -1146,7 +1146,7 @@ elif [ "$TOOL" == "F" ]; then
 		    if [ $VERBOSE == true ]; then
                         echo "Beginning to delete SAM format filtered scraps files"
 	            fi
-                    rm "$OUT_FOLD/$BASE.scraps.filt.sam" || {
+		    rm "$OUT_FOLD/$(basename $BASE.scraps.filt.sam)" || {
                     echo >&2 "ERROR: SAM format filtered scraps file deletion failed!"
                     exit 1
                     }
