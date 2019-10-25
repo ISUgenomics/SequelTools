@@ -12,11 +12,6 @@ import sys, random
 
 inp = open(sys.argv[1])
 outName = "%ssubSampledSubs.sam" % (sys.argv[1].split("subreads.sam")[0])
-print(sys.argv[1])
-print(outName)
-print(sys.argv[2])
-print(sys.argv[3])
-print(sys.argv[4])
 out = open(outName, "w")
 subSampLongSub = sys.argv[2]     #whether to subsample longest subreads  (true or false)
 subSampCLRrand = sys.argv[3]     #whether to subsample by random CLR (true or false)
