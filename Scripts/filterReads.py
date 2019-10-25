@@ -11,14 +11,13 @@ import sys
 
 inpSubs = open(sys.argv[1])
 inpScraps = open(sys.argv[2])
-outFold = sys.argv[3]
-clrMinLen = sys.argv[4]            #true or false.  Whether or not to filter by CLR minimum Length
-numPasses = sys.argv[5]            #true or false.  Whether or not to filter by number of passes
-normScraps = sys.argv[6]           #true or false.  Whether or not to filter by normal scraps files
-clrMinLenThresh = int(sys.argv[7]) #The minimum length in bp for CLRs
-outSubsName = "%s/%s.filt.sam" % (outFold, sys.argv[1].split(".sam")[0])
+clrMinLen = sys.argv[3]            #true or false.  Whether or not to filter by CLR minimum Length
+numPasses = sys.argv[4]            #true or false.  Whether or not to filter by number of passes
+normScraps = sys.argv[5]           #true or false.  Whether or not to filter by normal scraps files
+clrMinLenThresh = int(sys.argv[6]) #The minimum length in bp for CLRs
+outSubsName = "%s.filt.sam" % (sys.argv[1].split(".sam")[0])
 outSubs = open(outSubsName, "w")
-outScrapsName = "%s/%s.filt.sam" % (outFold, sys.argv[2].split(".sam")[0])
+outScrapsName = "%s.filt.sam" % (sys.argv[2].split(".sam")[0])
 outScraps = open(outScrapsName, "w")
 
 

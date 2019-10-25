@@ -893,13 +893,13 @@ elif [ $TOOL == "S" ]; then
     for SUBREADS_NOBAM in "${SUBREADS_FILES_ARRAY_NOBAM[@]}"; do
 	SCRAPS_NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
         if [ $NOSCRAPS == true  ]; then
-	    subsampleReads_noScraps.py "$OUT_FOLD/$(basename $SUBREADS_NOBAM.sam)" "$OUT_FOLD" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
+	    subsampleReads_noScraps.py "$OUT_FOLD/$(basename $SUBREADS_NOBAM.sam)" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
             echo >&2 "ERROR: Read subsampling failed!"
             exit 1
             }
 
 	else
-	    subsampleReads_wScraps.py "$OUT_FOLD/$(basename $SUBREADS_NOBAM.sam)" "$OUT_FOLD/$(basename $SCRAPS_NOBAM.sam)" "$OUT_FOLD" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
+	    subsampleReads_wScraps.py "$OUT_FOLD/$(basename $SUBREADS_NOBAM.sam)" "$OUT_FOLD/$(basename $SCRAPS_NOBAM.sam)" "$SUBSAMP_LONGSUB" "$SUBSAMP_RAND" "$RANDCLR_PROP" || {
             echo >&2 "ERROR: Read subsampling failed!"
             exit 1
             }
@@ -1097,7 +1097,7 @@ elif [ "$TOOL" == "F" ]; then
     I=1
     for SUBREADS_NOBAM in "${SUBREADS_FILES_ARRAY_NOBAM[@]}"; do
         SCRAPS_NOBAM=${SCRAPS_FILES_ARRAY_NOBAM[I]}
-	filterReads.py "$OUT_FOLD/$(basename $SUBREADS_NOBAM.sam)" "$OUT_FOLD/$(basename $SCRAPS_NOBAM.sam)" "$OUT_FOLD" "$CLR_FILT" "$NUMPASS_FILT" "$NORMSCRAP_FILT" "$CLR_FILT_THRESH" || {
+	filterReads.py "$OUT_FOLD/$(basename $SUBREADS_NOBAM.sam)" "$OUT_FOLD/$(basename $SCRAPS_NOBAM.sam)" "$CLR_FILT" "$NUMPASS_FILT" "$NORMSCRAP_FILT" "$CLR_FILT_THRESH" || {
         echo >&2 "ERROR: Read filtering failed!"
         exit 1
         }
