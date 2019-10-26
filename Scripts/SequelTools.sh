@@ -81,13 +81,13 @@ function print_help_menu() {
              Default is 0.1.
 
     Read Filtering tool arguments
-        -C : Filter by CLR minimum length. No default is provided.
-        -P : Filter by number of complete passes of the DNA template. No 
-             default is provided.
-        -N : Filter by normal scraps adapters defined as having a ZMW 
+        -C : Filter by CLR minimum length. Requires no parameter.
+        -P : Filter by number of complete passes of the DNA template. 
+             Requires no parameter.
+        -N : Filter by normal scraps adapters, defined as having a ZMW 
              classification annotation of 'N' for 'normal' and a scrap 
-             region-type annotation of 'A' for 'adapter'. No default is 
-             provided.
+             region-type annotation of 'A' for 'adapter'. Requires no 
+             parameter.
         -Z : When filtering by CLR minimum length, the minimum length threshold
              for retaining each CLR. No default is provided.
 
