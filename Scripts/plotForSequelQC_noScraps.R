@@ -81,7 +81,7 @@ for(i in seq(numFiles)){
 #Determine names of SMRTcells
 pairNames = c()
 for(fileName in SMRTcellStatsFiles){
-    pairName = strsplit(fileName,".SMRTcellStats_noScraps.txt")[1]
+    pairName = strsplit(strsplit(fileName,".SMRTcellStats_noScraps.txt")[[1]], "/")[[1]][2]
     pairNames = append(pairNames, pairName)
 }
 
@@ -235,7 +235,7 @@ if (plotsDesired == "a") {
         longSubRLs = longSubReadLensMatrix[i,]
 
         #Create strings to use for plotting
-        histName = sprintf("%s/%s.readLenHists.pdf", outFold, pairNames[i])
+        histName = sprintf("%s.readLenHists.pdf", pairNames[i])
         subTitle = sprintf("Histogram of subread read lengths for %s", pairNames[i])
         longSubTitle = sprintf("Histogram of longest subread read lengths for %s", pairNames[i])
 
