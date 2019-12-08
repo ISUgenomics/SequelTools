@@ -12,16 +12,15 @@ import sys, random
 
 inpSubs = open(sys.argv[1])
 inpScraps = open(sys.argv[2])
-folder = sys.argv[3]
-outNameSubs = "%s/%ssubSampledSubs.sam" % \
-(folder, sys.argv[1].split("subreads.sam")[0])
+outNameSubs = "%ssubSampledSubs.sam" % \
+(sys.argv[1].split("subreads.sam")[0])
 outSubs = open(outNameSubs, "w")
-outNameScraps = "%s/%ssubSampledScraps.sam" % \
-(folder, sys.argv[2].split("scraps.sam")[0])
+outNameScraps = "%ssubSampledScraps.sam" % \
+(sys.argv[2].split("scraps.sam")[0])
 outScraps = open(outNameScraps, "w")
-subSampLongSub = sys.argv[4]     #whether to subsample longest subreads  (true or false)
-subSampCLRrand = sys.argv[5]     #whether to subsample by random CLR (true or false)
-subSampCLRrandProp = float(sys.argv[6]) #the proportion of CLRs to retain for rondomly subsampling CLRs
+subSampLongSub = sys.argv[3]     #whether to subsample longest subreads  (true or false)
+subSampCLRrand = sys.argv[4]     #whether to subsample by random CLR (true or false)
+subSampCLRrandProp = float(sys.argv[5]) #the proportion of CLRs to retain for rondomly subsampling CLRs
 
 
 #Convert subSampLongSub and subSampCLRrand to true booleans

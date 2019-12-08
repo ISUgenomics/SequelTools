@@ -381,7 +381,7 @@ if (plotsDesired == "a") {
         subedClrRLs = subedClrReadLensMatrix[i,]
 
         #Create strings to use for plotting
-        histName = sprintf("%s.readLenHists.pdf", pairNames[i])
+        histName = sprintf("%s/%s.readLenHists.pdf", outFold, pairNames[i])
         subTitle = sprintf("Histogram of subread read lengths for %s", pairNames[i])
         subedClrTitle = sprintf("Histogram of subed-Clr read lengths for %s", pairNames[i])
 
@@ -493,7 +493,7 @@ if (plotsDesired == "a") {
     ##Make frequency plots of subreads/CLR
     if (groupsDesired == "a") {
         for(i in seq(numPairs)){
-            plotName = sprintf("%s.subsPerClr.pdf", pairNames[i])
+            plotName = sprintf("%s/%s.subsPerClr.pdf", outFold, pairNames[i])
             pdf(plotName); par(lwd=1.5, mgp=c(2.2,1,0))
             
             #Make "histogram" manually as a line plot to avoid binning 0 and 1 together
@@ -516,7 +516,7 @@ if (plotsDesired == "a") {
     ##Make frequency plots of adapters/CLR
     if (groupsDesired == "a") {
         for(i in seq(numPairs)){
-            plotName = sprintf("%s.adsPerClr.pdf", pairNames[i])
+            plotName = sprintf("%s/%s.adsPerClr.pdf", outFold, pairNames[i])
             pdf(plotName); par(lwd=1.5)
 
             #Make "histogram" manually as a line plot to avoid binning 0 and 1 together                   

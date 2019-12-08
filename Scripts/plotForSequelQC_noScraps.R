@@ -235,7 +235,7 @@ if (plotsDesired == "a") {
         longSubRLs = longSubReadLensMatrix[i,]
 
         #Create strings to use for plotting
-        histName = sprintf("%s.readLenHists.pdf", pairNames[i])
+        histName = sprintf("%s/%s.readLenHists.pdf", outFold, pairNames[i])
         subTitle = sprintf("Histogram of subread read lengths for %s", pairNames[i])
         longSubTitle = sprintf("Histogram of longest subread read lengths for %s", pairNames[i])
 
