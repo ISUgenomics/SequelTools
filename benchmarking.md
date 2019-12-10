@@ -27,9 +27,15 @@ A file of file names (fofn) was generated for subreads (one per line) labelled `
 #!/bin/bash
 PATH=$PATH:/ptmp/GIF/arnstrm/sequeltools/SequelTools/Scripts
 ml r-devtools samtools python
-cpu=$2
+cpu=$1
 echo "subread"
-time ./SequelTools.sh -u subreads.txt -t Q -p a -g a -n ${cpu} -o runSequelT-QC-sub_${cpu}_8-SMRTcells
+time ./SequelTools.sh \
+    -u subreads.txt \
+    -t Q \
+    -p a \
+    -g a \
+    -n ${cpu} \
+    -o runSequelT-QC-sub_${cpu}_8-SMRTcells
 ```
 
 For running it on 4 to 16 CPUs:
@@ -48,9 +54,15 @@ A file of file names (fofn) was generated for subreads (one per line) labelled `
 #!/bin/bash
 PATH=$PATH:/ptmp/GIF/arnstrm/sequeltools/SequelTools/Scripts
 ml r-devtools samtools python
-cpu=$2
+cpu=$1
 echo "subread"
-time ./SequelTools.sh -c scraps.txt -t Q -p a -g a -n ${cpu} -o runSequelT-QC-scr_${cpu}_8-SMRTcells
+time ./SequelTools.sh \
+    -u subreads.txt \
+    -t Q \
+    -p a \
+    -g a \
+    -n ${cpu} \
+    -o runSequelT-QC-scr_${cpu}_8-SMRTcells
 ```
 
 For running it on 4 to 16 CPUs:
@@ -62,4 +74,90 @@ done
 ```
 
 
-## 2. Benchmarking QC tool
+## 2. Benchmarking Filter tool
+
+Filter tool requires both subreads and scraps, so `subreads.txt` and `scraps.txt`, previously created fofn was used to test filtering tool based on (a) Adapters, (b) Passes, and (c) Size. The benchmarking was done similarly as explained above (8 SMRTcells and 4-16 CPUs).
+
+### A. Adapters
+
+The run script was set up as follows (`runSequelT-F_adp.sh`)
+
+```bash
+#!/bin/bash
+PATH=$PATH:/ptmp/GIF/arnstrm/sequeltools/SequelTools/Scripts
+ml r-devtools samtools python
+cpu=$1
+echo "subread"
+time ./SequelTools.sh \
+    -c scraps.txt \
+    -u subreads.txt \
+    -t F \
+    -N \
+    -n ${cpu} \
+    -o runSequelT-F_adp_${cpu}_8-SMRTcells
+rm runSequelT-F_adp_${cpu}_8-SMRTcells/*.sam
+```
+For running it on 4 to 16 CPUs:
+
+```bash
+for i in $(seq 4 16); do
+  runSequelT-F_adp.sh $i
+done
+```
+
+### B. Passes
+
+The run script was set up as follows (`runSequelT-F_pas.sh`)
+
+```bash
+#!/bin/bash
+PATH=$PATH:/ptmp/GIF/arnstrm/sequeltools/SequelTools/Scripts
+ml r-devtools samtools python
+cpu=$1
+echo "subread"
+time ./SequelTools.sh \
+    -c scraps.txt \
+    -u subreads.txt \
+    -t F \
+    -P \
+    -n ${cpu} \
+    -o runSequelT-F_pas_${cpu}_8-SMRTcells
+rm runSequelT-F_pas_${cpu}_8-SMRTcells/*.sam
+```
+For running it on 4 to 16 CPUs:
+
+```bash
+for i in $(seq 4 16); do
+  runSequelT-F_pas.sh $i
+done
+```
+
+### C. Length
+
+Fixed length (1000bp) was used for length filtering. The run script was set up as follows (`runSequelT-F_len.sh`)
+
+```bash
+#!/bin/bash
+PATH=$PATH:/ptmp/GIF/arnstrm/sequeltools/SequelTools/Scripts
+ml r-devtools samtools python
+cpu=$1
+echo "subread"
+time ./SequelTools.sh \
+    -c scraps.txt \
+    -u subreads.txt \
+    -t F \
+    -C \
+    -Z 1000
+    -n ${cpu} \
+    -o runSequelT-F_len_${cpu}_8-SMRTcells
+rm runSequelT-F_len_${cpu}_8-SMRTcells/*.sam
+```
+For running it on 4 to 16 CPUs:
+
+```bash
+for i in $(seq 4 16); do
+  runSequelT-F_len.sh $i
+done
+```
+
+## 3. Benchmarking SubSampling tool
