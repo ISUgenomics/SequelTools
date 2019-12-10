@@ -28,7 +28,6 @@ A file of file names (fofn) was generated for subreads (one per line) labelled `
 PATH=$PATH:/ptmp/GIF/arnstrm/sequeltools/SequelTools/Scripts
 ml r-devtools samtools python
 cpu=$1
-echo "subread"
 time ./SequelTools.sh \
     -u subreads.txt \
     -t Q \
@@ -55,7 +54,6 @@ A file of file names (fofn) was generated for subreads (one per line) labelled `
 PATH=$PATH:/ptmp/GIF/arnstrm/sequeltools/SequelTools/Scripts
 ml r-devtools samtools python
 cpu=$1
-echo "subread"
 time ./SequelTools.sh \
     -u subreads.txt \
     -t Q \
@@ -87,7 +85,6 @@ The run script was set up as follows (`runSequelT-F_adp.sh`)
 PATH=$PATH:/ptmp/GIF/arnstrm/sequeltools/SequelTools/Scripts
 ml r-devtools samtools python
 cpu=$1
-echo "subread"
 time ./SequelTools.sh \
     -c scraps.txt \
     -u subreads.txt \
@@ -114,7 +111,6 @@ The run script was set up as follows (`runSequelT-F_pas.sh`)
 PATH=$PATH:/ptmp/GIF/arnstrm/sequeltools/SequelTools/Scripts
 ml r-devtools samtools python
 cpu=$1
-echo "subread"
 time ./SequelTools.sh \
     -c scraps.txt \
     -u subreads.txt \
@@ -141,7 +137,6 @@ Fixed length (1000bp) was used for length filtering. The run script was set up a
 PATH=$PATH:/ptmp/GIF/arnstrm/sequeltools/SequelTools/Scripts
 ml r-devtools samtools python
 cpu=$1
-echo "subread"
 time ./SequelTools.sh \
     -c scraps.txt \
     -u subreads.txt \
@@ -160,4 +155,27 @@ for i in $(seq 4 16); do
 done
 ```
 
-## 3. Benchmarking SubSampling tool
+## 3. Benchmarking Sub-Sampling tool
+
+For Sub sampling the subreads, we used length based sub-sampling method (select longest subread per CLR). Since it only needs subreads, we used the `subreads.txt` fofn as input. The benchmarking was done similarly as explained above (8 SMRTcells and 4-16 CPUs), using the `runSequelT-S_len.sh` script.
+
+```bash
+#!/bin/bash
+PATH=$PATH:/ptmp/GIF/arnstrm/sequeltools/SequelTools/Scripts
+ml r-devtools samtools python
+cpu=$1
+time ./SequelTools.sh \
+    -u subreads.txt \
+    -t S \
+    -T l \
+    -n ${cpu} \
+    -o runSequelT-S_len_${cpu}_8-SMRTcells
+rm runSequelT-S_len_${cpu}_8-SMRTcells/*.sam
+```
+For running it on 4 to 16 CPUs:
+
+```bash
+for i in $(seq 4 16); do
+  runSequelT-S_len.sh $i
+done
+```
