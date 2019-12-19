@@ -1,6 +1,6 @@
 # SequelTools
 
-XXXXXXXXXStart with a link to the paper, ask people to read it and insist they cite it whenever publishing/presenting using results from _SequelTools_XXXXXXXXX
+For more information please read our paper found at https://www.biorxiv.org/content/10.1101/611814v2.  Whenever using this software or presenting data generated from this software you are obligated to cite this paper.  This work is protected by an open source GNU copywrite.
 
 _SequelTools_ is a fast and easy to install command-line program that provides a collection of tools for working with multiple SMRTcells of BAM format PacBio Sequel raw sequece data.  _SequelTools_ contains three tools: the Quality Control (QC) tool, the Read Subsampling tool, and the Read Filtering tool.  The QC tool produces multiple statistics and publication quality plots describing the quality of the data including N50, read length and count statistics, PSR, and ZOR.  The Read Subsampling tool allows the user to subsample their sequence files by one or more potential criteria: longest subreads per continuous long read (CLR), or random CLR selection. This tool provides the user a filtering functionality and requires both scraps files and subreads files to function. Filtering can be done using one or more of the following criteria: 1) minimum CLR length, 2) having at least one complete pass of the DNA molecule past the polymerase, or 3) Normal adapters for scraps reads.
 
