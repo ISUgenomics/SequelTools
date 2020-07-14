@@ -90,7 +90,7 @@ The job summary stats (MaxRSS, runtime, CPUtime) were calculated using the stand
 sacct --format JobId,JobName,ReqCPUS,ReqMem,ReqNodes,Elapsed,SystemCPU,CPUTime,MaxRSS,MaxVMSize,State,Start,End -u arnstrm
 ```
 
-## Assembling the PacBio dataset after filtering for reads > 5Kb
+## Assembling the PacBio dataset after filtering for CLRs >= 5Kb
 
 Canu was used for assembly, but the reads were first processed using SequelTools. After processing, the reads were converted to fasta.
 
