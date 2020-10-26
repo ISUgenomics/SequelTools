@@ -24,7 +24,7 @@ Once installed, clone the github repository, make the script executables, and ad
 
 ```
 git clone https://github.com/ISUgenomics/SequelTools.git
-cd SequelQC
+cd SequelTools/Scripts
 chmod +x *.sh *.py *.R
 export PATH=$PATH:"$(pwd)"
 ```
