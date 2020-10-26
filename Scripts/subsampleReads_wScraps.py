@@ -12,11 +12,11 @@ import sys, random
 
 inpSubs = open(sys.argv[1])
 inpScraps = open(sys.argv[2])
-outNameSubs = "%ssubSampledSubs.sam" % \
-(sys.argv[1].split("subreads.sam")[0])
+outNameSubs = "%s_spl.subreads.sam" % \
+(sys.argv[1].split(".subreads.sam")[0])
 outSubs = open(outNameSubs, "w")
-outNameScraps = "%ssubSampledScraps.sam" % \
-(sys.argv[2].split("scraps.sam")[0])
+outNameScraps = "%s_spl.scraps.sam" % \
+(sys.argv[2].split(".scraps.sam")[0])
 outScraps = open(outNameScraps, "w")
 subSampLongSub = sys.argv[3]     #whether to subsample longest subreads  (true or false)
 subSampCLRrand = sys.argv[4]     #whether to subsample by random CLR (true or false)

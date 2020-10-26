@@ -324,6 +324,7 @@ while getopts ":t:c:o:n:g:p:r:u:f:T:R:Z:CPNvksh" opt; do
 done
 
 
+
 #If required arguments are not provided throw an error and provide the help page
 if (( REQUIRED_PAR != 2 )); then
     echo -e "\nERROR: The required parameters for this program are -u. and -t"
@@ -738,7 +739,6 @@ if [ "$TOOL" == "Q" ]; then
 	    rm "$OUT_FOLD/$(basename $SUBREADS_NOBAM.seqNames)"
 	    rm "$OUT_FOLD/$(basename $BASE.readLens.sub.txt)"
 	    rm "$OUT_FOLD/$(basename $BASE.readLens.longSub.txt)"
-	    rm "$OUT_FOLD/$(basename $BASE.SMRTcellStats_noScraps.txt)"
 
             if [ $NOSCRAPS == false ]; then
 		rm "$OUT_FOLD/$(basename $SCRAPS_NOBAM.seqNamesPlus)"
@@ -750,7 +750,10 @@ if [ "$TOOL" == "Q" ]; then
                 elif [ "$GROUPS_DESIRED" == "b" ]; then
 		    rm "$OUT_FOLD/$(basename $BASE.SMRTcellStats_wScrapsB.txt)"
                 fi
+	    else
+		rm "$OUT_FOLD/$(basename $BASE.SMRTcellStats_noScraps.txt)"
             fi
+
 
             (( I++ ))
         done
@@ -908,9 +911,6 @@ elif [ $TOOL == "S" ]; then
         (( I++ ))
     done
 
-    if [ $VERBOSE == true ]; then
-        echo "Read subsampling is complete!"
-    fi
 
     if [ $FORMAT == 'b' ] || [ $FORMAT == "2"  ]; then
         #If the user has requested it, convert the subsampled files to BAM format
@@ -925,34 +925,28 @@ elif [ $TOOL == "S" ]; then
                 FILES_BASE_ARRAY[ $I ]="$BASE"
             fi
 
+
             #Convert BAM files to SAM format
-	    samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename $BASE.subSampledSubs.sam)" > "$OUT_FOLD/$(basename $BASE.subSampledSubs.bam)" || {
+	    samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename ${BASE}_spl.subreads.sam)" > "$OUT_FOLD/$(basename ${BASE}_spl.subreads.bam)" || {
             echo >&2 "ERROR: SAM to BAM conversion of subsampled subreads files failed!"
             exit 1
             }
 
 	    if [ $NOSCRAPS == false ]; then
-		samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename $BASE.subSampledScraps.sam)" > "$OUT_FOLD/$(basename $BASE.subSampledScraps.bam)" || {
+		samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename ${BASE}_spl.scraps.sam)" > "$OUT_FOLD/$(basename ${BASE}_spl.scraps.bam)" || {
                 echo >&2 "ERROR: SAM to BAM conversion of subsampled scraps files failed!"
                 exit 1
                 }    
 	    fi
 
-
             if [ $FORMAT != "2" ]; then
-		if [ $VERBOSE == true ]; then
-                    echo "Beginning to delete SAM format subsampled subreads files"
-	        fi
-		rm "$OUT_FOLD/$(basename $BASE.subSampledSubs.sam)" || {
+		rm "$OUT_FOLD/$(basename ${BASE}_spl.subreads.sam)" || {
                 echo >&2 "ERROR: SAM format subsampled subreads file deletion failed!"
                 exit 1
                 }
 
 		if [ $NOSCRAPS == false ]; then
-		    if [ $VERBOSE == true ]; then
-                        echo "Beginning to delete SAM format subsampled scraps files"
-	            fi
-		    rm "$OUT_FOLD/$(basename $BASE.subSampledScraps.sam)" || {
+		    rm "$OUT_FOLD/$(basename ${BASE}_spl.scraps.sam)" || {
                     echo >&2 "ERROR: SAM format subsampled scraps file deletion failed!"
                     exit 1
                     }
@@ -965,7 +959,42 @@ elif [ $TOOL == "S" ]; then
         if [ $VERBOSE == true ]; then
             echo "SAM to BAM conversion of subsampled read data files is complete!"
         fi
+    fi 
+
+
+    #remove .sam versions of original .bam input files
+    if [ $VERBOSE == true ]; then
+        echo "Beginning to delete SAM conversions of input BAM files"
     fi
+
+    for NOBAM in "${SUBREADS_FILES_ARRAY_NOBAM[@]}"; do
+        if [[ "$NOBAM" =~ (.*).subreads ]]; then
+            BASE=${BASH_REMATCH[1]}
+            FILES_BASE_ARRAY[ $I ]="$BASE"
+
+            if [ $NOSCRAPS == false ]; then
+                rm "$OUT_FOLD/$(basename $BASE.scraps.sam)" || {
+                echo >&2 "ERROR: SAM conversion of input scraps BAM file deletion failed"
+                exit 1
+                }
+
+                (( I++ ))
+            fi
+
+            rm "$OUT_FOLD/$(basename $BASE.subreads.sam)" || {
+            echo >&2 "ERROR: SAM conversion of input subreads BAM file deletion failed"
+            exit 1
+            }
+        fi
+    done
+
+
+    if [ $VERBOSE == true ]; then
+	echo "Deletion of SAM conversions of input BAM files is complete!"
+        echo "Read subsampling is complete!"
+    fi
+
+
 
 
 elif [ "$TOOL" == "F" ]; then
@@ -1110,6 +1139,7 @@ elif [ "$TOOL" == "F" ]; then
         #If the user has requested it, convert the filtered files to BAM format
         if [ $VERBOSE == true ]; then
             echo "Beginning to convert filtered data files to BAM format"
+	    echo "Beginning to delete SAM format filtered scraps and subreads files"
         fi
 
         I=1
@@ -1120,33 +1150,27 @@ elif [ "$TOOL" == "F" ]; then
             fi
 
             #Convert BAM files to SAM format
-	    samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename $BASE.subreads.filt.sam)" > "$OUT_FOLD/$(basename $BASE.subreads.filt.bam)" || {
+	    samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename ${BASE}_flt.subreads.sam)" > "$OUT_FOLD/$(basename ${BASE}_flt.subreads.bam)" || {
             echo >&2 "ERROR: SAM to BAM conversion of filtered subreads files failed!"
             exit 1
             }
 
             if [ $NOSCRAPS == false ]; then
-		samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename $BASE.scraps.filt.sam)" > "$OUT_FOLD/$(basename $BASE.scraps.filt.bam)" || {
+		samtools view --threads "$NTHREADS" -O BAM -h "$OUT_FOLD/$(basename ${BASE}_flt.scraps.sam)" > "$OUT_FOLD/$(basename ${BASE}_flt.scraps.bam)" || {
                 echo >&2 "ERROR: SAM to BAM conversion of filtered scraps files failed!"
                 exit 1
                 }
             fi
 
-
+            #Delete SAM format filtered files
             if [ $FORMAT != "2" ]; then
-		if [ $VERBOSE == true ]; then
-                    echo "Beginning to delete SAM format filtered subreads files"
-	        fi
-		rm "$OUT_FOLD/$(basename $BASE.subreads.filt.sam)" || {
+		rm "$OUT_FOLD/$(basename ${BASE}_flt.subreads.sam)" || {
                 echo >&2 "ERROR: SAM format filtered subreads file deletion failed!"
                 exit 1
                 }
 
                 if [ $NOSCRAPS == false ]; then
-		    if [ $VERBOSE == true ]; then
-                        echo "Beginning to delete SAM format filtered scraps files"
-	            fi
-		    rm "$OUT_FOLD/$(basename $BASE.scraps.filt.sam)" || {
+		    rm "$OUT_FOLD/$(basename ${BASE}_flt.scraps.sam)" || {
                     echo >&2 "ERROR: SAM format filtered scraps file deletion failed!"
                     exit 1
                     }
@@ -1160,6 +1184,34 @@ elif [ "$TOOL" == "F" ]; then
             echo "SAM to BAM conversion of filtered read data files is complete!"
         fi
     fi
+
+
+    #remove .sam versions of original .bam input files
+    if [ $VERBOSE == true ]; then
+        echo "Beginning to delete SAM conversions of input BAM files"
+    fi
+
+    for NOBAM in "${SUBREADS_FILES_ARRAY_NOBAM[@]}"; do
+        if [[ "$NOBAM" =~ (.*).subreads ]]; then
+            BASE=${BASH_REMATCH[1]}
+            FILES_BASE_ARRAY[ $I ]="$BASE"
+
+            if [ $NOSCRAPS == false ]; then
+                rm "$OUT_FOLD/$(basename $BASE.scraps.sam)" || {
+                echo >&2 "ERROR: SAM conversion of input scraps BAM file deletion failed"
+                exit 1
+                }
+
+                (( I++ ))
+            fi
+
+            rm "$OUT_FOLD/$(basename $BASE.subreads.sam)" || {
+            echo >&2 "ERROR: SAM conversion of input subreads BAM file deletion failed"
+            exit 1
+            }
+        fi
+    done
+
 fi
 
 

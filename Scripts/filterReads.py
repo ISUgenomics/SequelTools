@@ -15,9 +15,9 @@ clrMinLen = sys.argv[3]            #true or false.  Whether or not to filter by 
 numPasses = sys.argv[4]            #true or false.  Whether or not to filter by number of passes
 normScraps = sys.argv[5]           #true or false.  Whether or not to filter by normal scraps files
 clrMinLenThresh = int(sys.argv[6]) #The minimum length in bp for CLRs
-outSubsName = "%s.filt.sam" % (sys.argv[1].split(".sam")[0])
+outSubsName = "%s_flt.subreads.sam" % (sys.argv[1].split(".subreads.sam")[0])
 outSubs = open(outSubsName, "w")
-outScrapsName = "%s.filt.sam" % (sys.argv[2].split(".sam")[0])
+outScrapsName = "%s_flt.scraps.sam" % (sys.argv[2].split(".scraps.sam")[0])
 outScraps = open(outScrapsName, "w")
 
 

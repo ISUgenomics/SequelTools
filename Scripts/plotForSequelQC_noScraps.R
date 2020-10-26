@@ -157,7 +157,7 @@ for(i in seq(numPairs)){
 ##plot
 plotName = sprintf("%s/n50s.pdf",outFold)
 pdf(plotName)
-par(omi=c(0.8,0.2,0,0), mgp=c(3.5,1,0), mar=c(7.1, 4.3, 4.1, 2.1))
+par(omi=c(0.8,0.2,0,0), mgp=c(3.5,1,0), mar=c(8.8, 4.3, 4.1, 2.1))
 allN50s = rbind(subN50s,longSubN50s)
 groupNames=c("subreads","longestSubs")
 
@@ -168,7 +168,7 @@ invisible(dev.off())
 if (plotsDesired == "a") {
     plotName = sprintf("%s/l50s.pdf",outFold)
     pdf(plotName)
-    par(omi=c(0.8,0,0,0), mgp=c(3.9,1,0), mar=c(7.1, 5.1, 4.1, 2.1))
+    par(omi=c(0.8,0,0,0), mgp=c(3.9,1,0), mar=c(8.5, 5.1, 4.1, 2.1))
     allL50s = rbind(subL50s,longSubL50s)
 
     barplot(allL50s, main="L50 summary", ylab="L50", las=2, beside=TRUE, names.arg=pairNames, col=c("#0276FD","chartreuse2"), ylim=c(0,max(allL50s)*1.4))
@@ -236,8 +236,8 @@ if (plotsDesired == "a") {
 
         #Create strings to use for plotting
         histName = sprintf("%s/%s.readLenHists.pdf", outFold, pairNames[i])
-        subTitle = sprintf("Histogram of subread read lengths for %s", pairNames[i])
-        longSubTitle = sprintf("Histogram of longest subread read lengths for %s", pairNames[i])
+        subTitle = sprintf("Histogram of subread lengths for %s", pairNames[i])
+        longSubTitle = sprintf("Histogram of longest subread lengths for %s", pairNames[i])
 
         #Determine the number of breaks to use
         subBreaks = round((max(subRLs, na.rm=TRUE) / 1000), 0)
@@ -259,7 +259,7 @@ if (plotsDesired == "a") {
 #Make a barplot of total bases for all the same groups for each SMRTcell
 plotName = sprintf("%s/totalBasesBarplot.pdf",outFold)
 pdf(plotName)
-par(omi=c(1.2,0,0,0), mgp=c(3.6,1,0), mar=c(5.1, 5.1, 4.1, 2.1))
+par(omi=c(1.2,0,0,0), mgp=c(3.6,1,0), mar=c(6.4, 5.1, 4.1, 2.1))
 totalBasesArray = rbind(totalBasesSubAr, totalBasesLongSubAr)
 
 barplot(totalBasesArray/1000000, main="Total Bases Barplot", ylab="Total Bases (Mb)", las=2, beside=TRUE, names.arg=pairNames, col=c("#0276FD","chartreuse2"), ylim=c(0,max(totalBasesArray)*1.15/1000000))
@@ -271,7 +271,7 @@ invisible(dev.off())
 if (plotsDesired != "b") {
     plotName = sprintf("%s/zors.pdf",outFold)
     pdf(plotName, height=2.5)
-    par(mar=c(2.5,1,9,1))
+    par(mar=c(2.5,1,10.0,1))
     xStart = min(zors)-0.01 #Determine xlims for ZORs 
     xStop = max(zors)+0.01
     if (xStart < 0) {
@@ -286,12 +286,12 @@ if (plotsDesired != "b") {
     for(i in seq(numPairs)){ #Then add SMRTcell labels
         mtext(pairNames[i], side=3, at=c(zors[i],1.1), las=2, cex=0.79, line=0.2)
     }
-    title("ZORs", line=7.9) #Finally add the title
+    title("ZORs", line=8.7) #Finally add the title
     invisible(dev.off())
 
     plotName = sprintf("%s/psrs.pdf",outFold)
     pdf(plotName, height=2.5)
-    par(mar=c(2.5,1,9,1))
+    par(mar=c(2.5,1,10.0,1))
     xStart = min(psrs)-0.01 #Determine xlims for ZORs 
     xStop = max(psrs)+0.01
     if (xStart < 0) {
@@ -306,7 +306,7 @@ if (plotsDesired != "b") {
     for(i in seq(numPairs)){ #Then add SMRTcell labels
         mtext(pairNames[i], side=3, at=c(psrs[i],1.1), las=2, cex=0.79, line=0.2)
     }
-    title("PSRs", line=7.9) #Finally add the title
+    title("PSRs", line=8.7) #Finally add the title
     invisible(dev.off())
 }
 
@@ -316,7 +316,7 @@ if (plotsDesired != "b") {
     ##Make boxplots of subread sizes with N50 shown 
     plotName = sprintf("%s/subreadSizesBoxplots.pdf",outFold)
     pdf(plotName)
-    par(omi=c(1.2,0,0,0), mgp=c(2.55,1,0))
+    par(omi=c(1.2,0,0,0), mgp=c(2.55,1,0), mar=c(7,4.1,4.1,2.1))
     boxplot(t(subReadLensMatrix)/1000, names=pairNames, ylab="Read Length (kb)", main="Boxplots of Subread Sizes with N50", las=2)
     points(subN50s/1000, pch=18, col="#0276FD", cex=2)
     invisible(dev.off())
