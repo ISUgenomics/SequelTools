@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 This script is designed to take a SAM format Pacbio Sequel subreads sequence 
 files, and potentially scraps files, and sumsample the reads in up to two

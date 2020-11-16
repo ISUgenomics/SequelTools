@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 This script is designed to filter SAM PacBio Sequel data files by minimum
 CLR length and/or having at least one complete pass of the DNA molecule past 

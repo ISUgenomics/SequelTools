@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 This script is designed to generate statistics from read lengths for both
 subreads and scraps and output them in this format with one stat per line: 
