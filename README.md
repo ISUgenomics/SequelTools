@@ -61,8 +61,8 @@ While the QC and Read Subsampling tools do not require scraps files, these tools
 The easy way to generate these files is using the find command:
 
 ```
-find $(pwd) -name "*subreads.bam"  > subreads.txt
-find $(pwd) -name "*scraps.bam"  > scraps.txt
+find $(pwd) -name "*subreads.bam"  > subFiles.txt
+find $(pwd) -name "*scraps.bam"  > scrFiles.txt
 ```
 
 ### The QC tool
